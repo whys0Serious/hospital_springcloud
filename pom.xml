@@ -9,12 +9,12 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>../hospital_eureka_server</module>
-        <module>../hospital_zuul</module>
-        <module>../hospital_config</module>
-        <module>../hospital_model</module>
-        <module>../hospital_zipkin</module>
-        <module>../hospital_springboot_admin</module>
+        <module>hospital_eureka_server</module>
+        <module>hospital_zuul</module>
+        <module>hospital_zipkin</module>
+        <module>hospital_model</module>
+        <module>hospital_config</module>
+        <module>hospital_springboot_admin</module>
     </modules>
 
     <parent>
