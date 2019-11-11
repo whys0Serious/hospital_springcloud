@@ -1,0 +1,7 @@
+
+
+file-fastdfs:
+  #文件上传临时目录
+  upload_location: D:\\upload\\
+  #文件需要拼接的路径
+  path: http://122.51.42.29:8888
