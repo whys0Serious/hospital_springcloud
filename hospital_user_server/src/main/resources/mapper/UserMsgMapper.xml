@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.UserMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.UserMsg" >
+    <constructor >
+      <idArg column="pk_uid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="pk_docid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_pass" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_mail" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_pic" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_gender" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_phone" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="is_activated" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="identity" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_uid, pk_docid, user_name, user_pass, user_mail, user_pic, user_gender, user_age, 
+    user_phone, is_activated, identity, gmt_create, gmt_modified
+  </sql>
+  <select id="findByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" />
+    from login_msg where user_phone=#{phone}
+  </select>
+  <select id="findByMail" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List"/>
+    from login_msg where user_mail=#{mail}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from login_msg
+    where pk_uid = #{pkUid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from login_msg
+    where pk_uid = #{pkUid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.UserMsg" >
+    insert into login_msg (pk_uid, pk_docid, user_name, 
+      user_pass, user_mail, user_pic, 
+      user_gender, user_age, user_phone, 
+      is_activated, identity, gmt_create, 
+      gmt_modified)
+    values (#{pkUid,jdbcType=BIGINT}, #{pkDocid,jdbcType=BIGINT}, #{userName,jdbcType=CHAR}, 
+      #{userPass,jdbcType=CHAR}, #{userMail,jdbcType=CHAR}, #{userPic,jdbcType=CHAR}, 
+      #{userGender,jdbcType=CHAR}, #{userAge,jdbcType=INTEGER}, #{userPhone,jdbcType=CHAR}, 
+      #{isActivated,jdbcType=TINYINT}, #{identity,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.UserMsg" >
+    insert into login_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkUid != null" >
+        pk_uid,
+      </if>
+      <if test="pkDocid != null" >
+        pk_docid,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPass != null" >
+        user_pass,
+      </if>
+      <if test="userMail != null" >
+        user_mail,
+      </if>
+      <if test="userPic != null" >
+        user_pic,
+      </if>
+      <if test="userGender != null" >
+        user_gender,
+      </if>
+      <if test="userAge != null" >
+        user_age,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="isActivated != null" >
+        is_activated,
+      </if>
+      <if test="identity != null" >
+        identity,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkUid != null" >
+        #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="pkDocid != null" >
+        #{pkDocid,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userPass != null" >
+        #{userPass,jdbcType=CHAR},
+      </if>
+      <if test="userMail != null" >
+        #{userMail,jdbcType=CHAR},
+      </if>
+      <if test="userPic != null" >
+        #{userPic,jdbcType=CHAR},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=CHAR},
+      </if>
+      <if test="userAge != null" >
+        #{userAge,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=CHAR},
+      </if>
+      <if test="isActivated != null" >
+        #{isActivated,jdbcType=TINYINT},
+      </if>
+      <if test="identity != null" >
+        #{identity,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.UserMsg" >
+    update login_msg
+    <set >
+      <if test="pkDocid != null" >
+        pk_docid = #{pkDocid,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userPass != null" >
+        user_pass = #{userPass,jdbcType=CHAR},
+      </if>
+      <if test="userMail != null" >
+        user_mail = #{userMail,jdbcType=CHAR},
+      </if>
+      <if test="userPic != null" >
+        user_pic = #{userPic,jdbcType=CHAR},
+      </if>
+      <if test="userGender != null" >
+        user_gender = #{userGender,jdbcType=CHAR},
+      </if>
+      <if test="userAge != null" >
+        user_age = #{userAge,jdbcType=INTEGER},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=CHAR},
+      </if>
+      <if test="isActivated != null" >
+        is_activated = #{isActivated,jdbcType=TINYINT},
+      </if>
+      <if test="identity != null" >
+        identity = #{identity,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_uid = #{pkUid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.UserMsg" >
+    update login_msg
+    set pk_docid = #{pkDocid,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=CHAR},
+      user_pass = #{userPass,jdbcType=CHAR},
+      user_mail = #{userMail,jdbcType=CHAR},
+      user_pic = #{userPic,jdbcType=CHAR},
+      user_gender = #{userGender,jdbcType=CHAR},
+      user_age = #{userAge,jdbcType=INTEGER},
+      user_phone = #{userPhone,jdbcType=CHAR},
+      is_activated = #{isActivated,jdbcType=TINYINT},
+      identity = #{identity,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where pk_uid = #{pkUid,jdbcType=BIGINT}
+  </update>
+</mapper>

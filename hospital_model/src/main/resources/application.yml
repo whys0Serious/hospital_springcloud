@@ -1,5 +1,4 @@
 
-
 file-fastdfs:
   #文件上传临时目录
   upload_location: D:\\upload\\
