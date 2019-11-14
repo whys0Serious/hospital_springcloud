@@ -23,4 +23,6 @@ public interface UserMsgMapper {
 
     UserMsg findByMail(String mail);
 
+    UserMsg findByName(String name);
+
 }

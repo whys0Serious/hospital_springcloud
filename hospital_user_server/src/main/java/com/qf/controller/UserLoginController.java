@@ -2,6 +2,7 @@ package com.qf.controller;
 
 import com.qf.domain.UserMsg;
 import com.qf.service.UserLoginService;
+import com.qf.utils.FastUtils;
 import com.qf.utils.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -10,9 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class UserLoginController {
@@ -89,9 +94,12 @@ public class UserLoginController {
     * 登录
     * */
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public String login(@RequestBody UserMsg userMsg){
-        Subject subject = SecurityUtils.getSubject();
+    public Long login(@RequestBody UserMsg userMsg){
+         Subject subject = SecurityUtils.getSubject();
         //做邮箱和手机号的判断
         UserMsg userMsg1 = userLoginService.checkMail(userMsg.getUserMail());
         UserMsg userMsg2 = userLoginService.checkPhone(userMsg.getUserMail());
@@ -108,21 +116,86 @@ public class UserLoginController {
                     UsernamePasswordToken token = new UsernamePasswordToken(userMsg1.getUserMail(),pass);
                     //shiro登录
                     subject.login(token);
-                    return "登录成功，欢迎您！";
+                    //登陆成功存入redis
+                    redisTemplate.opsForValue().set("userMsg"+userMsg1.getPkUid(),userMsg1);//userMsg+唯一id作为键
+                    return userMsg1.getPkUid();
                 }
             }
             else if(userMsg2!=null){//手机号码登录情况
-                if(userMsg2.getIdentity().equals(userMsg.getIdentity())&&userMsg1.getIsActivated()==i){
+                if(userMsg2.getIdentity().equals(userMsg.getIdentity())&&userMsg2.getIsActivated()==i){
                     //使用手机号登录
                     String password = Md5Utils.encryptPassword(userMsg.getUserPass(), userMsg2.getUserName());
                     UsernamePasswordToken token = new UsernamePasswordToken(userMsg2.getUserPhone(), password);
                     subject.login(token);
-                    return "登录成功，欢迎您！";
+                    redisTemplate.opsForValue().set("userMsg"+userMsg2.getPkUid(),userMsg2);
+                    return userMsg2.getPkUid();
                 }
             }
         }
-        return "登录信息有误，请重试！";
+        return null;
     }
+
+    /*
+    * 通过前端cookie从redis获取用户信息
+    * */
+    @RequestMapping("/getUserMsg")
+    public UserMsg getUserMsg(Long id){
+        UserMsg userMsg = (UserMsg) redisTemplate.opsForValue().get("userMsg" + id);
+        return userMsg;
+    }
+
+    /*
+    * 注销，清空redis信息
+    * */
+    @RequestMapping("/loginOut")
+    public void loginOut(Long id){
+        redisTemplate.expire("userMsg"+id,0,TimeUnit.SECONDS);
+    }
+
+    /*
+    * 上传图片
+    * */
+        @Autowired
+        private FastUtils fastUtils;
+    @RequestMapping(value = "/uploadPic",method = RequestMethod.POST)
+    public String uploadPic(MultipartFile file){
+        try {
+            String upload = fastUtils.upload(file);
+            return upload;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+       return null;
+    }
+
+    /*
+    * 修改头像
+    * */
+    @RequestMapping("/updatePic")
+    public String updatePic(String pic,Long id){
+        if(id!=null&&pic!=null){
+            UserMsg userMsg=new UserMsg();
+            userMsg.setUserPic(pic);
+            userMsg.setPkUid(id);
+             userLoginService.updateById(userMsg);
+            //同时修改redis中的信息
+            redisTemplate.opsForValue().set("userMsg"+id,userLoginService.findByPkId(id));
+            return "success";
+        }
+
+        return "fail";
+    }
+
+    //修改用户信息
+    @RequestMapping(value = "/updateUserMsg",method = RequestMethod.POST)
+    public String updateUserMsg(@RequestBody UserMsg userMsg){
+        //修改数据库信息
+        userLoginService.updateById(userMsg);
+        //修改redis
+        redisTemplate.opsForValue().set("userMsg"+userMsg.getPkUid(),userMsg);
+            return "success";
+    }
+
 
 
 }

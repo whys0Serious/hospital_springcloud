@@ -22,6 +22,10 @@
     pk_uid, pk_docid, user_name, user_pass, user_mail, user_pic, user_gender, user_age, 
     user_phone, is_activated, identity, gmt_create, gmt_modified
   </sql>
+  <select id="findByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List"></include>
+    from login_msg where user_name=#{name}
+  </select>
   <select id="findByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
     select <include refid="Base_Column_List" />
     from login_msg where user_phone=#{phone}
