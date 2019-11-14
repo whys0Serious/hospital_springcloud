@@ -39,14 +39,22 @@ public class EsDataController {
     //搜索
     @ResponseBody
     @RequestMapping("/searchall/{page}/{size}")
-    public Respons search(@PathVariable("page") Integer page, @PathVariable("size") Integer size) throws IOException {
+    public Respons search(@PathVariable("page") Integer page, @PathVariable("size") Integer size,@RequestParam("department")String department,@RequestParam("zhicheng")String zhicheng) throws IOException {
         //声明需要查询的索引库
         SearchRequest searchRequest = new SearchRequest("docter_info");
         searchRequest.types("doc");
         //搜索源对象构建
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+
+        if (department.equals("") || department==null || zhicheng.equals("") || zhicheng==null){
+            //搜索全部
+            searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        }else {
+            searchSourceBuilder.query(QueryBuilders.termQuery("department",department));
+        }
+
+
         //分页查询
         //设置分页参数  当前页码
 //        int page = 2; //页码
