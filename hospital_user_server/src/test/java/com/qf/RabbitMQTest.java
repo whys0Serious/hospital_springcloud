@@ -10,10 +10,9 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -50,4 +49,24 @@ public class RabbitMQTest {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
+    @Test
+    public void fileText() throws IOException {
+        File file = new File("F:\\input.txt");
+        try {
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            StringBuffer stringBuffer = new StringBuffer();
+            String numStr;
+            List list=new ArrayList();
+            while ((numStr=bufferedReader.readLine())!=null){
+                    if(Integer.parseInt(numStr)<1000&&Integer.parseInt(numStr)>0){
+                        list.add(numStr);
+                    }
+            }
+            System.out.println(list.size());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
