@@ -18,6 +18,7 @@
         <module>hospital_user_server</module>
         <module>hospital_RabbitMQ_server</module>
         <module>hospitail_registered</module>
+        <module>hospital_elesticsearch</module>
     </modules>
 
     <parent>
@@ -63,6 +64,7 @@
                 <artifactId>jedis</artifactId>
                 <version>2.9.0</version>
             </dependency>
+
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
