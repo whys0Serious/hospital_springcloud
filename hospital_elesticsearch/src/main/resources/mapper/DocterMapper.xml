@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mybatis的映射
+     namespace="";映射到什么对象中
+-->
+<mapper namespace="com.qf.dao.DocterMapper">
+    <resultMap id="DocterMap" type="com.qf.domain.Docter">
+        <id property="did" column="pk_docid"  jdbcType="BIGINT"/>
+        <result property="pk_uid" column="pk_uid"  jdbcType="BIGINT"/>
+        <result property="pk_depid" column="pk_depid"  jdbcType="BIGINT"/>
+        <result property="doc_name" column="doc_name"  jdbcType="CHAR"/>
+        <result property="department" column="department"  jdbcType="CHAR"/>
+        <result property="specialty" column="specialty"  jdbcType="CHAR"/>
+        <result property="gender" column="gender"  jdbcType="CHAR"/>
+        <result property="working_age" column="working_age"  jdbcType="INTEGER"/>
+        <result property="attendance" column="attendance"  jdbcType="INTEGER"/>
+        <result property="gmt_create" column="gmt_create"  jdbcType="DATE"/>
+        <result property="gmt_modified" column="gmt_modified"  jdbcType="DATE"/>
+        <result property="zhicheng" column="zhicheng"  jdbcType="VARCHAR"/>
+        <result property="doc_pic" column="doc_pic"  jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="findByDoctement" resultMap="DocterMap" parameterType="java.lang.Integer">
+        select
+        *
+        from
+        doc_msg
+        WHERE
+        department=(SELECT department FROM doc_msg WHERE pk_docid=#{pk_docid}) AND pk_docid not in(#{pk_docid})
+    </select>
+
+</mapper>

@@ -15,6 +15,7 @@
         <module>hospital_model</module>
         <module>hospital_config</module>
         <module>hospital_springboot_admin</module>
+        <module>hospital_elesticsearch</module>
     </modules>
 
     <parent>
@@ -60,6 +61,7 @@
                 <artifactId>jedis</artifactId>
                 <version>2.9.0</version>
             </dependency>
+
             <dependency>
                 <groupId>org.elasticsearch</groupId>
                 <artifactId>elasticsearch</artifactId>
