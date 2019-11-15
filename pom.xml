@@ -17,7 +17,7 @@
         <module>hospital_springboot_admin</module>
         <module>hospital_user_server</module>
         <module>hospital_RabbitMQ_server</module>
-        <module>hospitail_registered</module>
+        <module>hospital_departshow</module>
         <module>hospital_elesticsearch</module>
     </modules>
 
