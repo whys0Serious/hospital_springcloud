@@ -25,4 +25,9 @@ public interface UserMsgMapper {
 
     UserMsg findByName(String name);
 
+    String findBypkdocid(Long docid);
+
+    UserMsg checkDoc(Long docid);
+
+    String getDocMsg(Long docid);
 }

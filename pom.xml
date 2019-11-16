@@ -19,6 +19,7 @@
         <module>hospital_RabbitMQ_server</module>
         <module>hospital_departshow</module>
         <module>hospital_elesticsearch</module>
+        <module>hospital_alipay</module>
     </modules>
 
     <parent>

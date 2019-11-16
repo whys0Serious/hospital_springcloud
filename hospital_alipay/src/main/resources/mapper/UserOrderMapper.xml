@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.UserOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.UserOrder" >
+    <constructor >
+      <idArg column="pk_oid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="doc_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="dep_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="statement" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="order_num" jdbcType="INTEGER" javaType="java.lang.String" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_oid, user_id, doc_name, dep_name, price, statement, order_num, gmt_create, gmt_modified
+  </sql>
+  <update id="updateByIdAndOrderId" parameterType="com.qf.domain.UserOrder">
+    update user_order
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="docName != null" >
+        doc_name = #{docName,jdbcType=CHAR},
+      </if>
+      <if test="depName != null" >
+        dep_name = #{depName,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="statement != null" >
+        statement = #{statement,jdbcType=CHAR},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id=#{userId} and order_num=#{orderNum}
+  </update>
+  <select id="countSize" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+   select count(*) from user_order
+    where user_id=#{id}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="com.qf.domain.PageBean">
+    select <include refid="Base_Column_List" />
+    from user_order where user_id=#{id} limit #{pageSize},#{size}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_order
+    where pk_oid = #{pkOid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_order
+    where pk_oid = #{pkOid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.UserOrder" >
+    insert into user_order (pk_oid, user_id, doc_name,
+      dep_name, price, statement, 
+      order_num, gmt_create, gmt_modified
+      )
+    values (#{pkOid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{docName,jdbcType=CHAR},
+      #{depName,jdbcType=CHAR}, #{price,jdbcType=DECIMAL}, #{statement,jdbcType=CHAR}, 
+      #{orderNum,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.UserOrder" >
+    insert into user_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkOid != null" >
+        pk_oid,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="docName != null" >
+        doc_name,
+      </if>
+      <if test="depName != null" >
+        dep_name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="statement != null" >
+        statement,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkOid != null" >
+        #{pkOid,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="docName != null" >
+        #{docName,jdbcType=CHAR},
+      </if>
+      <if test="depName != null" >
+        #{depName,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="statement != null" >
+        #{statement,jdbcType=CHAR},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.UserOrder" >
+    update user_order
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="docName != null" >
+        doc_name = #{docName,jdbcType=CHAR},
+      </if>
+      <if test="depName != null" >
+        dep_name = #{depName,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="statement != null" >
+        statement = #{statement,jdbcType=CHAR},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_oid = #{pkOid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.UserOrder" >
+    update user_order
+    set user_id = #{user_id,jdbcType=INTEGER},
+      doc_name = #{docName,jdbcType=CHAR},
+      dep_name = #{depName,jdbcType=CHAR},
+      price = #{price,jdbcType=DECIMAL},
+      statement = #{statement,jdbcType=CHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where pk_oid = #{pkOid,jdbcType=INTEGER}
+  </update>
+</mapper>
