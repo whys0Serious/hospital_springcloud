@@ -15,6 +15,7 @@ import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -38,8 +39,8 @@ public class EsDataController {
 
     //搜索
     @ResponseBody
-    @RequestMapping("/searchall/{page}/{size}")
-    public Respons search(@PathVariable("page") Integer page, @PathVariable("size") Integer size,@RequestParam("department")String department,@RequestParam("zhicheng")String zhicheng) throws IOException {
+    @RequestMapping("/searchall")
+    public Respons search(Integer page, Integer size,String department,String zhiwei) throws IOException {
         //声明需要查询的索引库
         SearchRequest searchRequest = new SearchRequest("docter_info");
         searchRequest.types("doc");
@@ -47,11 +48,17 @@ public class EsDataController {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 
-        if (department.equals("") || department==null || zhicheng.equals("") || zhicheng==null){
+        if (department.equals("") && zhiwei.equals("")){
             //搜索全部
             searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        }else {
-            searchSourceBuilder.query(QueryBuilders.termQuery("department",department));
+        }else if (!(department.equals("")) && zhiwei.equals("")){
+                searchSourceBuilder.query(QueryBuilders.termQuery("department",department));
+        }else if (!(zhiwei.equals("") ) && department.equals("")){
+                searchSourceBuilder.query(QueryBuilders.termQuery("zhicheng",zhiwei));
+        }else if (!(department.equals("")) && !(zhiwei.equals("") )){
+            MultiMatchQueryBuilder multiMatchQueryBuilder=new MultiMatchQueryBuilder("department","zhicheng") .minimumShouldMatch("50%")
+                    .field("name", 10);;
+            searchSourceBuilder.query(multiMatchQueryBuilder);
         }
 
 
@@ -114,9 +121,7 @@ public class EsDataController {
                 "                        \"type\": \"keyword\"\n" +
                 "                    },\n" +
                 "                    \"department\": {\n" +
-                "                        \"type\": \"text\",\n" +
-                "                        \"analyzer\": \"ik_max_word\",\n" +
-                "                        \"search_analyzer\": \"ik_smart\"\n" +
+                "                        \"type\": \"keyword\"\n" +
                 "                    },\n" +
                 "                    \"specialty\": {\n" +
                 "                        \"type\": \"text\",\n" +

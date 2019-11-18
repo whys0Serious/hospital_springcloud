@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.DepatementMapper" >
+
+  <resultMap id="ResultMapWithBLOBs" type="com.qf.model.Depatement" >
+    <constructor >
+      <idArg column="pk_depid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="dep_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="charge" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="visit_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="department_pic" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="department_type" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_depid, dep_name, charge, visit_num, department_pic, gmt_create, gmt_modified
+  </sql>
+  <sql id="Blob_Column_List" >
+    department_type
+  </sql>
+
+  <select id="findAll" resultMap="ResultMapWithBLOBs" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from department_msg
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from department_msg
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from department_msg
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qf.model.Depatement" >
+    insert into department_msg (pk_depid, dep_name, charge, 
+      visit_num, department_pic, gmt_create, 
+      gmt_modified, department_type)
+    values (#{pkDepid,jdbcType=BIGINT}, #{depName,jdbcType=CHAR}, #{charge,jdbcType=DECIMAL}, 
+      #{visitNum,jdbcType=INTEGER}, #{departmentPic,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP}, #{departmentType,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.model.Depatement" >
+    insert into department_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDepid != null" >
+        pk_depid,
+      </if>
+      <if test="depName != null" >
+        dep_name,
+      </if>
+      <if test="charge != null" >
+        charge,
+      </if>
+      <if test="visitNum != null" >
+        visit_num,
+      </if>
+      <if test="departmentPic != null" >
+        department_pic,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="departmentType != null" >
+        department_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDepid != null" >
+        #{pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="depName != null" >
+        #{depName,jdbcType=CHAR},
+      </if>
+      <if test="charge != null" >
+        #{charge,jdbcType=DECIMAL},
+      </if>
+      <if test="visitNum != null" >
+        #{visitNum,jdbcType=INTEGER},
+      </if>
+      <if test="departmentPic != null" >
+        #{departmentPic,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentType != null" >
+        #{departmentType,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.model.Depatement" >
+    update department_msg
+    <set >
+      <if test="depName != null" >
+        dep_name = #{depName,jdbcType=CHAR},
+      </if>
+      <if test="charge != null" >
+        charge = #{charge,jdbcType=DECIMAL},
+      </if>
+      <if test="visitNum != null" >
+        visit_num = #{visitNum,jdbcType=INTEGER},
+      </if>
+      <if test="departmentPic != null" >
+        department_pic = #{departmentPic,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentType != null" >
+        department_type = #{departmentType,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.qf.model.Depatement" >
+    update department_msg
+    set dep_name = #{depName,jdbcType=CHAR},
+      charge = #{charge,jdbcType=DECIMAL},
+      visit_num = #{visitNum,jdbcType=INTEGER},
+      department_pic = #{departmentPic,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      department_type = #{departmentType,jdbcType=LONGVARCHAR}
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.model.Depatement" >
+    update department_msg
+    set dep_name = #{depName,jdbcType=CHAR},
+      charge = #{charge,jdbcType=DECIMAL},
+      visit_num = #{visitNum,jdbcType=INTEGER},
+      department_pic = #{departmentPic,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </update>
+</mapper>
