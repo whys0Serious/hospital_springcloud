@@ -6,12 +6,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="hospitail_registered" />
+        <module name="hospital_alipay" />
         <module name="hospital_config" />
+        <module name="hospital_departshow" />
+        <module name="hospital_elesticsearch" />
         <module name="hospital_eureka_server" />
         <module name="hospital_model" />
+        <module name="hospital_RabbitMQ_server" />
         <module name="hospital_springboot_admin" />
+        <module name="hospital_user_server" />
         <module name="hospital_zipkin" />
         <module name="hospital_zuul" />
+        <module name="houtai_manager" />
       </profile>
     </annotationProcessing>
   </component>

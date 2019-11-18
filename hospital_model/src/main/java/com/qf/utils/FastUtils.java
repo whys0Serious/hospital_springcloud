@@ -25,7 +25,6 @@ public class FastUtils {
 
     @Value("${file-fastdfs.upload_location}")
     private String filePath;
-
     @Value("${file-fastdfs.path}")
     private String path;
 

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.mapper.DocMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.DocMsg" >
+    <id column="pk_docid" property="pkDocid" jdbcType="BIGINT" />
+    <result column="pk_uid" property="pkUid" jdbcType="BIGINT" />
+    <result column="pk_depid" property="pkDepid" jdbcType="BIGINT" />
+    <result column="doc_name" property="docName" jdbcType="CHAR" />
+    <result column="department" property="department" jdbcType="CHAR" />
+    <result column="specialty" property="specialty" jdbcType="CHAR" />
+    <result column="gender" property="gender" jdbcType="CHAR" />
+    <result column="working_age" property="workingAge" jdbcType="INTEGER" />
+    <result column="attendance" property="attendance" jdbcType="INTEGER" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_docid, pk_uid, pk_depid, doc_name, department, specialty, gender, working_age, 
+    attendance, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.domain.DocMsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from doc_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_msg
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doc_msg
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qf.domain.DocMsgExample" >
+    delete from doc_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.DocMsg" >
+    insert into doc_msg (pk_docid, pk_uid, pk_depid, 
+      doc_name, department, specialty, 
+      gender, working_age, attendance, 
+      gmt_create, gmt_modified)
+    values (#{pkDocid,jdbcType=BIGINT}, #{pkUid,jdbcType=BIGINT}, #{pkDepid,jdbcType=BIGINT}, 
+      #{docName,jdbcType=CHAR}, #{department,jdbcType=CHAR}, #{specialty,jdbcType=CHAR}, 
+      #{gender,jdbcType=CHAR}, #{workingAge,jdbcType=INTEGER}, #{attendance,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.DocMsg" >
+    insert into doc_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDocid != null" >
+        pk_docid,
+      </if>
+      <if test="pkUid != null" >
+        pk_uid,
+      </if>
+      <if test="pkDepid != null" >
+        pk_depid,
+      </if>
+      <if test="docName != null" >
+        doc_name,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="specialty != null" >
+        specialty,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="workingAge != null" >
+        working_age,
+      </if>
+      <if test="attendance != null" >
+        attendance,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDocid != null" >
+        #{pkDocid,jdbcType=BIGINT},
+      </if>
+      <if test="pkUid != null" >
+        #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="pkDepid != null" >
+        #{pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="docName != null" >
+        #{docName,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="workingAge != null" >
+        #{workingAge,jdbcType=INTEGER},
+      </if>
+      <if test="attendance != null" >
+        #{attendance,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.domain.DocMsgExample" resultType="java.lang.Integer" >
+    select count(*) from doc_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update doc_msg
+    <set >
+      <if test="record.pkDocid != null" >
+        pk_docid = #{record.pkDocid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkUid != null" >
+        pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="record.pkDepid != null" >
+        pk_depid = #{record.pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="record.docName != null" >
+        doc_name = #{record.docName,jdbcType=CHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=CHAR},
+      </if>
+      <if test="record.specialty != null" >
+        specialty = #{record.specialty,jdbcType=CHAR},
+      </if>
+      <if test="record.gender != null" >
+        gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.workingAge != null" >
+        working_age = #{record.workingAge,jdbcType=INTEGER},
+      </if>
+      <if test="record.attendance != null" >
+        attendance = #{record.attendance,jdbcType=INTEGER},
+      </if>
+      <if test="record.gmtCreate != null" >
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null" >
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update doc_msg
+    set pk_docid = #{record.pkDocid,jdbcType=BIGINT},
+      pk_uid = #{record.pkUid,jdbcType=BIGINT},
+      pk_depid = #{record.pkDepid,jdbcType=BIGINT},
+      doc_name = #{record.docName,jdbcType=CHAR},
+      department = #{record.department,jdbcType=CHAR},
+      specialty = #{record.specialty,jdbcType=CHAR},
+      gender = #{record.gender,jdbcType=CHAR},
+      working_age = #{record.workingAge,jdbcType=INTEGER},
+      attendance = #{record.attendance,jdbcType=INTEGER},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.DocMsg" >
+    update doc_msg
+    <set >
+      <if test="pkUid != null" >
+        pk_uid = #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="pkDepid != null" >
+        pk_depid = #{pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="docName != null" >
+        doc_name = #{docName,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="workingAge != null" >
+        working_age = #{workingAge,jdbcType=INTEGER},
+      </if>
+      <if test="attendance != null" >
+        attendance = #{attendance,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.DocMsg" >
+    update doc_msg
+    set pk_uid = #{pkUid,jdbcType=BIGINT},
+      pk_depid = #{pkDepid,jdbcType=BIGINT},
+      doc_name = #{docName,jdbcType=CHAR},
+      department = #{department,jdbcType=CHAR},
+      specialty = #{specialty,jdbcType=CHAR},
+      gender = #{gender,jdbcType=CHAR},
+      working_age = #{workingAge,jdbcType=INTEGER},
+      attendance = #{attendance,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </update>
+</mapper>
