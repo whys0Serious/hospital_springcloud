@@ -1,5 +1,6 @@
 package com.qf;
 
+import com.qf.service.UserLoginService;
 import com.qf.utils.Md5Utils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,5 +69,13 @@ public class RabbitMQTest {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Autowired
+    private UserLoginService userLoginService;
+    @Test
+    public void  test2(){
+        Long l =new Long(6);
+        System.out.println(userLoginService.findDocName(l));
     }
 }

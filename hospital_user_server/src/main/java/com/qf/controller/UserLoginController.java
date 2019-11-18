@@ -7,8 +7,6 @@ import com.qf.utils.Md5Utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -86,6 +84,43 @@ public class UserLoginController {
         userLoginService.updateById(byPkId);
 
         return "激活成功，立即前往登陆";
+    }
+
+    /*
+    * 医师注册
+    * */
+
+    @RequestMapping(value = "/docRegist",method = RequestMethod.POST)
+    public String docRegist(@RequestBody UserMsg userMsg){
+        //判断医师编号是否已经注册
+        UserMsg userMsg1 = userLoginService.checkDoc(userMsg.getPkDocid());
+        if(userMsg1==null){//未注册
+            //设置状态为未激活
+            byte i=0;
+            userMsg.setIsActivated(i);
+            //设置创建时间
+            userMsg.setGmtCreate(new Date());
+            //查询医师头像
+            userMsg.setUserPic( userLoginService.findByDocid(userMsg.getPkDocid()));
+            //添加到数据库
+            userLoginService.insert(userMsg);
+
+            return "注册成功，将在30分钟内审核完成";
+        }
+            return null;
+    }
+
+    /*
+    * 根据外键查询医师信息
+    * */
+    @RequestMapping("/checkDoc")
+    public String checkDoc(Long docid){
+        String docName = userLoginService.findDocName(docid);
+        if(docName!=null){
+            return docName;
+        }
+        return null;
+
     }
 
 

@@ -24,12 +24,15 @@ public class Doccontroller {
     private Docservice docservice;
 
 
+    //首页展示科室介绍
     @RequestMapping("/showdepart")
     public List<Depatement> showDepatment(){
 
         return docservice.findAll();
 
     }
+
+
 
 
 

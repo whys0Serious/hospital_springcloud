@@ -1,7 +1,6 @@
 package com.qf.service;
 
 import com.qf.domain.UserMsg;
-import org.apache.catalina.User;
 
 public interface UserLoginService {
 
@@ -14,5 +13,11 @@ public interface UserLoginService {
     UserMsg findByPkId(Long id);
 
     int updateById(UserMsg userMsg);
+
+    String findByDocid(Long docid);
+
+    UserMsg checkDoc(Long docid);
+
+    String findDocName(Long docid);
 
 }

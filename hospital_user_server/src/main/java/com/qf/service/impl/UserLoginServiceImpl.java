@@ -36,4 +36,19 @@ public class UserLoginServiceImpl implements UserLoginService {
     public int updateById(UserMsg userMsg) {
         return userMsgMapper.updateByPrimaryKeySelective(userMsg);
     }
+
+    @Override
+    public String findByDocid(Long docid) {
+        return userMsgMapper.findBypkdocid(docid);
+    }
+
+    @Override
+    public UserMsg checkDoc(Long docid) {
+        return userMsgMapper.checkDoc(docid);
+    }
+
+    @Override
+    public String findDocName(Long docid) {
+        return userMsgMapper.getDocMsg(docid);
+    }
 }
