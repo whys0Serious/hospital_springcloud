@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.DocMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.DocMsg" >
+    <constructor >
+      <idArg column="pk_docid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="pk_uid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="pk_depid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="doc_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="department" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="specialty" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="working_age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="attendance" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="zhicheng" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="doc_pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_docid, pk_uid, pk_depid, doc_name, department, specialty, gender, working_age, 
+    attendance, gmt_create, gmt_modified, zhicheng, doc_pic
+  </sql>
+  <select id="selectByDepid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+    select <include refid="Base_Column_List"/>
+    from doc_msg where pk_docid=#{did}
+  </select>
+  <select id="findPriceBydep" resultType="java.math.BigDecimal" parameterType="java.lang.String">
+    SELECT charge FROM department_msg WHERE dep_name=#{depname}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from doc_msg
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from doc_msg
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.DocMsg" >
+    insert into doc_msg (pk_docid, pk_uid, pk_depid, 
+      doc_name, department, specialty, 
+      gender, working_age, attendance, 
+      gmt_create, gmt_modified, zhicheng, 
+      doc_pic)
+    values (#{pkDocid,jdbcType=BIGINT}, #{pkUid,jdbcType=BIGINT}, #{pkDepid,jdbcType=BIGINT}, 
+      #{docName,jdbcType=CHAR}, #{department,jdbcType=CHAR}, #{specialty,jdbcType=CHAR}, 
+      #{gender,jdbcType=CHAR}, #{workingAge,jdbcType=INTEGER}, #{attendance,jdbcType=INTEGER}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}, #{zhicheng,jdbcType=VARCHAR}, 
+      #{docPic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.DocMsg" >
+    insert into doc_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDocid != null" >
+        pk_docid,
+      </if>
+      <if test="pkUid != null" >
+        pk_uid,
+      </if>
+      <if test="pkDepid != null" >
+        pk_depid,
+      </if>
+      <if test="docName != null" >
+        doc_name,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="specialty != null" >
+        specialty,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="workingAge != null" >
+        working_age,
+      </if>
+      <if test="attendance != null" >
+        attendance,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+      <if test="zhicheng != null" >
+        zhicheng,
+      </if>
+      <if test="docPic != null" >
+        doc_pic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDocid != null" >
+        #{pkDocid,jdbcType=BIGINT},
+      </if>
+      <if test="pkUid != null" >
+        #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="pkDepid != null" >
+        #{pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="docName != null" >
+        #{docName,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="workingAge != null" >
+        #{workingAge,jdbcType=INTEGER},
+      </if>
+      <if test="attendance != null" >
+        #{attendance,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhicheng != null" >
+        #{zhicheng,jdbcType=VARCHAR},
+      </if>
+      <if test="docPic != null" >
+        #{docPic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.DocMsg" >
+    update doc_msg
+    <set >
+      <if test="pkUid != null" >
+        pk_uid = #{pkUid,jdbcType=BIGINT},
+      </if>
+      <if test="pkDepid != null" >
+        pk_depid = #{pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="docName != null" >
+        doc_name = #{docName,jdbcType=CHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=CHAR},
+      </if>
+      <if test="specialty != null" >
+        specialty = #{specialty,jdbcType=CHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="workingAge != null" >
+        working_age = #{workingAge,jdbcType=INTEGER},
+      </if>
+      <if test="attendance != null" >
+        attendance = #{attendance,jdbcType=INTEGER},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zhicheng != null" >
+        zhicheng = #{zhicheng,jdbcType=VARCHAR},
+      </if>
+      <if test="docPic != null" >
+        doc_pic = #{docPic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.DocMsg" >
+    update doc_msg
+    set pk_uid = #{pkUid,jdbcType=BIGINT},
+      pk_depid = #{pkDepid,jdbcType=BIGINT},
+      doc_name = #{docName,jdbcType=CHAR},
+      department = #{department,jdbcType=CHAR},
+      specialty = #{specialty,jdbcType=CHAR},
+      gender = #{gender,jdbcType=CHAR},
+      working_age = #{workingAge,jdbcType=INTEGER},
+      attendance = #{attendance,jdbcType=INTEGER},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      zhicheng = #{zhicheng,jdbcType=VARCHAR},
+      doc_pic = #{docPic,jdbcType=VARCHAR}
+    where pk_docid = #{pkDocid,jdbcType=BIGINT}
+  </update>
+</mapper>

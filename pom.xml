@@ -20,6 +20,7 @@
         <module>hospital_departshow</module>
         <module>hospital_elesticsearch</module>
         <module>hospital_alipay</module>
+        <module>hospitail_registered</module>
     </modules>
 
     <parent>

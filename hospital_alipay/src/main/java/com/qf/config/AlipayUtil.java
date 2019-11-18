@@ -13,7 +13,7 @@ import java.util.Random;
 @Component
 @Data
 public class AlipayUtil {
-    private String tradnum;
+    public String tradnum;
     public String pay(BigDecimal price, String name,String trade_no) throws AlipayApiException {
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl,
                 AlipayConfig.app_id,AlipayConfig.merchant_private_key,
@@ -23,9 +23,9 @@ public class AlipayUtil {
         AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
         if(trade_no==null){
             trade_no=tradeno();//随机获得订单编号；
-            tradnum=trade_no;
         }
-        System.out.println(trade_no);
+        tradnum=trade_no;
+        System.out.println("生成订单号："+trade_no);
         alipayRequest.setBizContent("{" +
                 "    \"out_trade_no\":\""+trade_no+"\"," +
                 "    \"product_code\":\"FAST_INSTANT_TRADE_PAY\"," +

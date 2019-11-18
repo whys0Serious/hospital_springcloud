@@ -17,6 +17,13 @@
   <sql id="Base_Column_List" >
     pk_oid, user_id, doc_name, dep_name, price, statement, order_num, gmt_create, gmt_modified
   </sql>
+  <select id="findUserById" parameterType="java.lang.Long" resultType="com.qf.domain.UserMsg">
+    select * from login_msg where pk_uid=#{uid}
+  </select>
+  <select id="findByOrderNum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from user_order where order_num=#{ordernum}
+  </select>
   <update id="updateByIdAndOrderId" parameterType="com.qf.domain.UserOrder">
     update user_order
     <set >

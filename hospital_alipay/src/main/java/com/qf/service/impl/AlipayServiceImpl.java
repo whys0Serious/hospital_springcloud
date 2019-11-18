@@ -2,6 +2,7 @@ package com.qf.service.impl;
 
 import com.qf.dao.UserOrderMapper;
 import com.qf.domain.PageBean;
+import com.qf.domain.UserMsg;
 import com.qf.domain.UserOrder;
 import com.qf.service.AlipayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,15 @@ public class AlipayServiceImpl implements AlipayService {
     @Override
     public int updateState(UserOrder userOrder) {
         return userOrderMapper.updateByIdAndOrderId(userOrder);
+    }
+
+    @Override
+    public UserOrder findByOrderNum(String ordernum) {
+        return userOrderMapper.findByOrderNum(ordernum);
+    }
+
+    @Override
+    public UserMsg findByUserId(Long uid) {
+        return userOrderMapper.findUserById(uid);
     }
 }
