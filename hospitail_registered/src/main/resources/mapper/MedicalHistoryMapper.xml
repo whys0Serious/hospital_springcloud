@@ -12,6 +12,7 @@
       <arg column="disease_name" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="drug_name" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="doc_advice" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="disease_info" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="drug_price" jdbcType="DECIMAL" javaType="java.lang.Long" />
       <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -19,11 +20,11 @@
   </resultMap>
   <sql id="Base_Column_List" >
     pk_mid, pk_depid, pk_docid, pk_uid, doc_name, department, disease_name, drug_name, 
-    doc_advice, drug_price, gmt_create, gmt_modified
+    doc_advice, disease_info, drug_price, gmt_create, gmt_modified
   </sql>
   <select id="findByUid" resultMap="BaseResultMap" parameterType="java.lang.Long">
     select <include refid="Base_Column_List"/>
-     from medicalhistory_msg where pk_uid=#{id}
+    from medicalhistory_msg where pk_uid=#{id}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
@@ -39,13 +40,13 @@
     insert into medicalhistory_msg (pk_mid, pk_depid, pk_docid, 
       pk_uid, doc_name, department, 
       disease_name, drug_name, doc_advice, 
-      drug_price, gmt_create, gmt_modified
-      )
+      disease_info, drug_price, gmt_create, 
+      gmt_modified)
     values (#{pkMid,jdbcType=BIGINT}, #{pkDepid,jdbcType=BIGINT}, #{pkDocid,jdbcType=BIGINT}, 
       #{pkUid,jdbcType=BIGINT}, #{docName,jdbcType=CHAR}, #{department,jdbcType=CHAR}, 
       #{diseaseName,jdbcType=CHAR}, #{drugName,jdbcType=CHAR}, #{docAdvice,jdbcType=CHAR}, 
-      #{drugPrice,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
-      )
+      #{diseaseInfo,jdbcType=VARCHAR}, #{drugPrice,jdbcType=DECIMAL}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.qf.domain.MedicalHistory" >
     insert into medicalhistory_msg
@@ -76,6 +77,9 @@
       </if>
       <if test="docAdvice != null" >
         doc_advice,
+      </if>
+      <if test="diseaseInfo != null" >
+        disease_info,
       </if>
       <if test="drugPrice != null" >
         drug_price,
@@ -115,6 +119,9 @@
       <if test="docAdvice != null" >
         #{docAdvice,jdbcType=CHAR},
       </if>
+      <if test="diseaseInfo != null" >
+        #{diseaseInfo,jdbcType=VARCHAR},
+      </if>
       <if test="drugPrice != null" >
         #{drugPrice,jdbcType=DECIMAL},
       </if>
@@ -153,6 +160,9 @@
       <if test="docAdvice != null" >
         doc_advice = #{docAdvice,jdbcType=CHAR},
       </if>
+      <if test="diseaseInfo != null" >
+        disease_info = #{diseaseInfo,jdbcType=VARCHAR},
+      </if>
       <if test="drugPrice != null" >
         drug_price = #{drugPrice,jdbcType=DECIMAL},
       </if>
@@ -175,6 +185,7 @@
       disease_name = #{diseaseName,jdbcType=CHAR},
       drug_name = #{drugName,jdbcType=CHAR},
       doc_advice = #{docAdvice,jdbcType=CHAR},
+      disease_info = #{diseaseInfo,jdbcType=VARCHAR},
       drug_price = #{drugPrice,jdbcType=DECIMAL},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}

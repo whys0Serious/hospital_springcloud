@@ -16,7 +16,11 @@ public class MedicalController {
 
     @RequestMapping("/showHistory")
     public List<MedicalHistory> showHistory(Long id){
-
        return medicalServer.findById(id);
+    }
+
+    @RequestMapping("/showOneHistory")
+    public MedicalHistory showOneHistory(Long mid){
+            return medicalServer.findByPkId(mid);
     }
 }

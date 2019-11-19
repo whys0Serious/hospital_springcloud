@@ -29,7 +29,7 @@ public class RabbitMQTest {
 
     @Test
     public void Md5Test(){
-        String password = Md5Utils.encryptPassword("666", "老板来了");
+        String password = Md5Utils.encryptPassword("123", "健美");
         System.out.println(password);
     }
 

@@ -1,6 +1,5 @@
-/*
 package com.qf.config;
-
+import com.qf.domain.UserMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -37,10 +36,8 @@ public class RabbitMailListener {
 
         MimeMessage mimeMailMessage = null;
         try {
-            */
-/*
-            * 设置邮件信息
-            * *//*
+//            * 设置邮件信息
+//            *
 
             mimeMailMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, true);
@@ -55,4 +52,3 @@ public class RabbitMailListener {
         }
     }
 }
-*/

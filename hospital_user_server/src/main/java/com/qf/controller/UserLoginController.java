@@ -1,5 +1,6 @@
 package com.qf.controller;
 
+import com.qf.dao.UserMsgMapper;
 import com.qf.domain.UserMsg;
 import com.qf.service.UserLoginService;
 import com.qf.utils.FastUtils;
@@ -63,8 +64,8 @@ public class UserLoginController {
         userMsg.setIdentity("用户");
         //设置创建时间
         userMsg.setGmtCreate(new Date());
-            //对密码进行md5加密,盐为用户名
-        userMsg.setUserPass(Md5Utils.encryptPassword(userMsg.getUserPass(), userMsg.getUserName()));
+            //对密码进行md5加密,盐为健美
+        userMsg.setUserPass(Md5Utils.encryptPassword(userMsg.getUserPass(), "健美"));
         //添加到数据库
         userLoginService.insert(userMsg);
         //查询当前用户，获得id一并发送给rabbit
@@ -89,9 +90,11 @@ public class UserLoginController {
     /*
     * 医师注册
     * */
-
+@Autowired
+private UserMsgMapper userMsgMapper;
     @RequestMapping(value = "/docRegist",method = RequestMethod.POST)
     public String docRegist(@RequestBody UserMsg userMsg){
+        System.out.println(userMsg);
         //判断医师编号是否已经注册
         UserMsg userMsg1 = userLoginService.checkDoc(userMsg.getPkDocid());
         if(userMsg1==null){//未注册
@@ -102,9 +105,13 @@ public class UserLoginController {
             userMsg.setGmtCreate(new Date());
             //查询医师头像
             userMsg.setUserPic( userLoginService.findByDocid(userMsg.getPkDocid()));
+            //设置角色
+            userMsg.setIdentity("医生");
+            //密码加密
+            String password = Md5Utils.encryptPassword(userMsg.getUserPass(), "健美");
+            userMsg.setUserPass(password);
             //添加到数据库
-            userLoginService.insert(userMsg);
-
+                userMsgMapper.insert(userMsg);
             return "注册成功，将在30分钟内审核完成";
         }
             return null;
@@ -116,13 +123,13 @@ public class UserLoginController {
     @RequestMapping("/checkDoc")
     public String checkDoc(Long docid){
         String docName = userLoginService.findDocName(docid);
-        if(docName!=null){
+        UserMsg userMsg = userLoginService.checkDoc(docid);
+        if(docName!=null&&userMsg==null){
             return docName;
         }
         return null;
 
     }
-
 
 
     /*
@@ -145,8 +152,8 @@ public class UserLoginController {
 
                 if(userMsg1.getIdentity().equals(userMsg.getIdentity())&&userMsg1.getIsActivated()==i){//查询身份,判断是否激活
                     //使用邮件登录
-                    //密码加密对比
-                    String pass = Md5Utils.encryptPassword(userMsg.getUserPass(), userMsg1.getUserName());
+                    //密码加密对比，盐值为健美
+                    String pass = Md5Utils.encryptPassword(userMsg.getUserPass(), "健美");
                     //获得token
                     UsernamePasswordToken token = new UsernamePasswordToken(userMsg1.getUserMail(),pass);
                     //shiro登录
@@ -154,6 +161,8 @@ public class UserLoginController {
                     //登陆成功存入redis
                     redisTemplate.opsForValue().set("userMsg"+userMsg1.getPkUid(),userMsg1);//userMsg+唯一id作为键
                     return userMsg1.getPkUid();
+                }else{
+                    return null ;
                 }
             }
             else if(userMsg2!=null){//手机号码登录情况
@@ -230,7 +239,4 @@ public class UserLoginController {
         redisTemplate.opsForValue().set("userMsg"+userMsg.getPkUid(),userMsg);
             return "success";
     }
-
-
-
 }

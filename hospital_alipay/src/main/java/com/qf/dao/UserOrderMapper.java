@@ -23,7 +23,7 @@ public interface UserOrderMapper {
 
     List<UserOrder> selectByName(PageBean pageBean);
 
-    int countSize (Integer id);
+    int countSize (Long id);
 
     int updateByIdAndOrderId(UserOrder userOrder);
 

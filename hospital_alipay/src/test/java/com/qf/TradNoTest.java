@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
@@ -35,10 +36,28 @@ public class TradNoTest {
         @Test
         public void test1(){
             PageBean pageBean=new PageBean();
-            pageBean.setId(10);
-            pageBean.setPageSize(0);
+//            pageBean.setId(10);
+//            pageBean.setPageSize(0);
             pageBean.setSize(2);
             List<UserOrder> showOrder = alipayService.showOrder(pageBean);
             System.out.println(showOrder);
+        }
+
+        @Test
+    public void test2(){
+        Integer in=1;
+        int i=in;
+        Long aLong = Long.valueOf(in);
+        System.out.println(aLong);
+    }
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+    private  int num;
+        @Test
+    public void test3(){
+            if (num==0){
+                redisTemplate.opsForZSet().add("test","一号",1);
+            }
         }
 }

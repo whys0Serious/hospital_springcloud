@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.qf.domain.UserOrder" >
     <constructor >
       <idArg column="pk_oid" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Long" />
       <arg column="doc_name" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="dep_name" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
@@ -14,10 +14,27 @@
       <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
+  <resultMap id="UserResultMap" type="com.qf.domain.UserMsg" >
+    <constructor >
+      <idArg column="pk_uid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="pk_docid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_pass" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_mail" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_pic" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_gender" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_phone" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="is_activated" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="identity" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
   <sql id="Base_Column_List" >
     pk_oid, user_id, doc_name, dep_name, price, statement, order_num, gmt_create, gmt_modified
   </sql>
-  <select id="findUserById" parameterType="java.lang.Long" resultType="com.qf.domain.UserMsg">
+  <select id="findUserById" parameterType="java.lang.Long" resultMap="UserResultMap">
     select * from login_msg where pk_uid=#{uid}
   </select>
   <select id="findByOrderNum" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -28,7 +45,8 @@
     update user_order
     <set >
       <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=BIGINT
+      },
       </if>
       <if test="docName != null" >
         doc_name = #{docName,jdbcType=CHAR},
@@ -54,7 +72,7 @@
     </set>
     where user_id=#{userId} and order_num=#{orderNum}
   </update>
-  <select id="countSize" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+  <select id="countSize" resultType="java.lang.Integer" parameterType="java.lang.Long">
    select count(*) from user_order
     where user_id=#{id}
   </select>
@@ -77,7 +95,7 @@
       dep_name, price, statement, 
       order_num, gmt_create, gmt_modified
       )
-    values (#{pkOid,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{docName,jdbcType=CHAR},
+    values (#{pkOid,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{docName,jdbcType=CHAR},
       #{depName,jdbcType=CHAR}, #{price,jdbcType=DECIMAL}, #{statement,jdbcType=CHAR}, 
       #{orderNum,jdbcType=INTEGER}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
@@ -147,7 +165,7 @@
     update user_order
     <set >
       <if test="userId != null" >
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
       <if test="docName != null" >
         doc_name = #{docName,jdbcType=CHAR},
@@ -175,7 +193,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.qf.domain.UserOrder" >
     update user_order
-    set user_id = #{user_id,jdbcType=INTEGER},
+    set user_id = #{user_id,jdbcType=BIGINT
+    },
       doc_name = #{docName,jdbcType=CHAR},
       dep_name = #{depName,jdbcType=CHAR},
       price = #{price,jdbcType=DECIMAL},

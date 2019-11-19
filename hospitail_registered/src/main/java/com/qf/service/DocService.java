@@ -10,4 +10,6 @@ public interface DocService{
     DocMsg findDocByDep(Long did);
 
     BigDecimal findPrice(String depname);
+
+
 }

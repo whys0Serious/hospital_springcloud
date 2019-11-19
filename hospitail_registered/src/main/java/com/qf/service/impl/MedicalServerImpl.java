@@ -10,10 +10,16 @@ import java.util.List;
 
 @Service
 public class MedicalServerImpl implements MedicalServer {
+
     @Autowired
     private MedicalHistoryMapper medicalHistoryMapper;
     @Override
     public List<MedicalHistory> findById(Long id) {
         return medicalHistoryMapper.findByUid(id);
+    }
+
+    @Override
+    public MedicalHistory findByPkId(Long pimid) {
+        return medicalHistoryMapper.selectByPrimaryKey(pimid);
     }
 }

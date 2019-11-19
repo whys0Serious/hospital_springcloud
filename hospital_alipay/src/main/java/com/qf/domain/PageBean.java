@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class PageBean {
 
-    private Integer id;
+    private Long id;
     private Integer page;
     private Integer size;
     private Integer pageSize;
