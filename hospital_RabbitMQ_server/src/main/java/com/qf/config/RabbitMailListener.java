@@ -1,4 +1,4 @@
-/*
+
 package com.qf.config;
 
 import org.slf4j.Logger;
@@ -37,10 +37,9 @@ public class RabbitMailListener {
 
         MimeMessage mimeMailMessage = null;
         try {
-            */
-/*
+            /*
             * 设置邮件信息
-            * *//*
+            */
 
             mimeMailMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, true);
@@ -55,4 +54,4 @@ public class RabbitMailListener {
         }
     }
 }
-*/
+

@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="hospital_RabbitMQ_server" />
+        <module name="houtai-manager" />
         <module name="hospital_indexshow" />
         <module name="hospital_elesticsearch" />
         <module name="hospital_departshow" />
@@ -23,6 +24,9 @@
         <module name="hospital_zipkin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="hospital_springcloud" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -41,6 +45,7 @@
       <module name="hospital_user_server" options="-parameters" />
       <module name="hospital_zipkin" options="-parameters" />
       <module name="hospital_zuul" options="-parameters" />
+      <module name="houtai-manager" options="-parameters" />
     </option>
   </component>
 </project>

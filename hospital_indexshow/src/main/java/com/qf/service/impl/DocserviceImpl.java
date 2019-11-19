@@ -4,6 +4,7 @@ import com.qf.dao.DepatementMapper;
 import com.qf.model.Depatement;
 import com.qf.service.Docservice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,9 +24,9 @@ public class DocserviceImpl implements Docservice {
     @Autowired
     private DepatementMapper depatementMapper;
 
+
     @Override
     public List<Depatement> findAll() {
-
         return depatementMapper.findAll();
     }
 }

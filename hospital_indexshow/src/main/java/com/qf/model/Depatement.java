@@ -1,8 +1,9 @@
 package com.qf.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Depatement {
+public class Depatement implements Serializable {
     private Long pkDepid;
 
     private String depName;
