@@ -11,4 +11,9 @@ public class RabbitConfig {
     public Queue mailQueue(){
         return new Queue("sendMail");
     }
+
+    @Bean
+    public Queue messageQueue(){
+        return new Queue("sendMessage");
+    }
 }

@@ -94,7 +94,6 @@ public class UserLoginController {
 private UserMsgMapper userMsgMapper;
     @RequestMapping(value = "/docRegist",method = RequestMethod.POST)
     public String docRegist(@RequestBody UserMsg userMsg){
-        System.out.println(userMsg);
         //判断医师编号是否已经注册
         UserMsg userMsg1 = userLoginService.checkDoc(userMsg.getPkDocid());
         if(userMsg1==null){//未注册
@@ -111,7 +110,7 @@ private UserMsgMapper userMsgMapper;
             String password = Md5Utils.encryptPassword(userMsg.getUserPass(), "健美");
             userMsg.setUserPass(password);
             //添加到数据库
-                userMsgMapper.insert(userMsg);
+               userLoginService.insert(userMsg);
             return "注册成功，将在30分钟内审核完成";
         }
             return null;
