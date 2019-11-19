@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.mapper.DepartmenMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.DepartmenMsg" >
+    <id column="pk_depid" property="pkDepid" jdbcType="BIGINT" />
+    <result column="dep_name" property="depName" jdbcType="CHAR" />
+    <result column="charge" property="charge" jdbcType="DECIMAL" />
+    <result column="visit_num" property="visitNum" jdbcType="INTEGER" />
+    <result column="department_pic" property="departmentPic" jdbcType="CHAR" />
+    <result column="department_type" property="departmentType" jdbcType="CHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_depid, dep_name, charge, visit_num, department_pic, department_type, gmt_create, 
+    gmt_modified
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.domain.DepartmenMsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from department_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from department_msg
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from department_msg
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qf.domain.DepartmenMsgExample" >
+    delete from department_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.DepartmenMsg" >
+    insert into department_msg (pk_depid, dep_name, charge, 
+      visit_num, department_pic, department_type, 
+      gmt_create, gmt_modified)
+    values (#{pkDepid,jdbcType=BIGINT}, #{depName,jdbcType=CHAR}, #{charge,jdbcType=DECIMAL}, 
+      #{visitNum,jdbcType=INTEGER}, #{departmentPic,jdbcType=CHAR}, #{departmentType,jdbcType=CHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.DepartmenMsg" >
+    insert into department_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDepid != null" >
+        pk_depid,
+      </if>
+      <if test="depName != null" >
+        dep_name,
+      </if>
+      <if test="charge != null" >
+        charge,
+      </if>
+      <if test="visitNum != null" >
+        visit_num,
+      </if>
+      <if test="departmentPic != null" >
+        department_pic,
+      </if>
+      <if test="departmentType != null" >
+        department_type,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDepid != null" >
+        #{pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="depName != null" >
+        #{depName,jdbcType=CHAR},
+      </if>
+      <if test="charge != null" >
+        #{charge,jdbcType=DECIMAL},
+      </if>
+      <if test="visitNum != null" >
+        #{visitNum,jdbcType=INTEGER},
+      </if>
+      <if test="departmentPic != null" >
+        #{departmentPic,jdbcType=CHAR},
+      </if>
+      <if test="departmentType != null" >
+        #{departmentType,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.domain.DepartmenMsgExample" resultType="java.lang.Integer" >
+    select count(*) from department_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update department_msg
+    <set >
+      <if test="record.pkDepid != null" >
+        pk_depid = #{record.pkDepid,jdbcType=BIGINT},
+      </if>
+      <if test="record.depName != null" >
+        dep_name = #{record.depName,jdbcType=CHAR},
+      </if>
+      <if test="record.charge != null" >
+        charge = #{record.charge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.visitNum != null" >
+        visit_num = #{record.visitNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.departmentPic != null" >
+        department_pic = #{record.departmentPic,jdbcType=CHAR},
+      </if>
+      <if test="record.departmentType != null" >
+        department_type = #{record.departmentType,jdbcType=CHAR},
+      </if>
+      <if test="record.gmtCreate != null" >
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null" >
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update department_msg
+    set pk_depid = #{record.pkDepid,jdbcType=BIGINT},
+      dep_name = #{record.depName,jdbcType=CHAR},
+      charge = #{record.charge,jdbcType=DECIMAL},
+      visit_num = #{record.visitNum,jdbcType=INTEGER},
+      department_pic = #{record.departmentPic,jdbcType=CHAR},
+      department_type = #{record.departmentType,jdbcType=CHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.DepartmenMsg" >
+    update department_msg
+    <set >
+      <if test="depName != null" >
+        dep_name = #{depName,jdbcType=CHAR},
+      </if>
+      <if test="charge != null" >
+        charge = #{charge,jdbcType=DECIMAL},
+      </if>
+      <if test="visitNum != null" >
+        visit_num = #{visitNum,jdbcType=INTEGER},
+      </if>
+      <if test="departmentPic != null" >
+        department_pic = #{departmentPic,jdbcType=CHAR},
+      </if>
+      <if test="departmentType != null" >
+        department_type = #{departmentType,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.DepartmenMsg" >
+    update department_msg
+    set dep_name = #{depName,jdbcType=CHAR},
+      charge = #{charge,jdbcType=DECIMAL},
+      visit_num = #{visitNum,jdbcType=INTEGER},
+      department_pic = #{departmentPic,jdbcType=CHAR},
+      department_type = #{departmentType,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where pk_depid = #{pkDepid,jdbcType=BIGINT}
+  </update>
+</mapper>

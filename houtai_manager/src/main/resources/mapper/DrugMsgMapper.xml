@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.mapper.DrugMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.DrugMsg" >
+    <id column="pk_drugid" property="pkDrugid" jdbcType="BIGINT" />
+    <result column="uk_page" property="ukPage" jdbcType="BIGINT" />
+    <result column="drug_name" property="drugName" jdbcType="CHAR" />
+    <result column="drug_syz" property="drugSyz" jdbcType="CHAR" />
+    <result column="drug_manu" property="drugManu" jdbcType="CHAR" />
+    <result column="drug_price" property="drugPrice" jdbcType="DECIMAL" />
+    <result column="drug_type" property="drugType" jdbcType="CHAR" />
+    <result column="drug_ggxh" property="drugGgxh" jdbcType="CHAR" />
+    <result column="drug_yfyl" property="drugYfyl" jdbcType="CHAR" />
+    <result column="drug_pic" property="drugPic" jdbcType="CHAR" />
+    <result column="gmt_create" property="gmtCreate" jdbcType="TIMESTAMP" />
+    <result column="gmt_modified" property="gmtModified" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    pk_drugid, uk_page, drug_name, drug_syz, drug_manu, drug_price, drug_type, drug_ggxh, 
+    drug_yfyl, drug_pic, gmt_create, gmt_modified
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qf.domain.DrugMsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from drug_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from drug_msg
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from drug_msg
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qf.domain.DrugMsgExample" >
+    delete from drug_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.DrugMsg" >
+    insert into drug_msg (pk_drugid, uk_page, drug_name, 
+      drug_syz, drug_manu, drug_price, 
+      drug_type, drug_ggxh, drug_yfyl, 
+      drug_pic, gmt_create, gmt_modified
+      )
+    values (#{pkDrugid,jdbcType=BIGINT}, #{ukPage,jdbcType=BIGINT}, #{drugName,jdbcType=CHAR}, 
+      #{drugSyz,jdbcType=CHAR}, #{drugManu,jdbcType=CHAR}, #{drugPrice,jdbcType=DECIMAL}, 
+      #{drugType,jdbcType=CHAR}, #{drugGgxh,jdbcType=CHAR}, #{drugYfyl,jdbcType=CHAR}, 
+      #{drugPic,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.DrugMsg" >
+    insert into drug_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDrugid != null" >
+        pk_drugid,
+      </if>
+      <if test="ukPage != null" >
+        uk_page,
+      </if>
+      <if test="drugName != null" >
+        drug_name,
+      </if>
+      <if test="drugSyz != null" >
+        drug_syz,
+      </if>
+      <if test="drugManu != null" >
+        drug_manu,
+      </if>
+      <if test="drugPrice != null" >
+        drug_price,
+      </if>
+      <if test="drugType != null" >
+        drug_type,
+      </if>
+      <if test="drugGgxh != null" >
+        drug_ggxh,
+      </if>
+      <if test="drugYfyl != null" >
+        drug_yfyl,
+      </if>
+      <if test="drugPic != null" >
+        drug_pic,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDrugid != null" >
+        #{pkDrugid,jdbcType=BIGINT},
+      </if>
+      <if test="ukPage != null" >
+        #{ukPage,jdbcType=BIGINT},
+      </if>
+      <if test="drugName != null" >
+        #{drugName,jdbcType=CHAR},
+      </if>
+      <if test="drugSyz != null" >
+        #{drugSyz,jdbcType=CHAR},
+      </if>
+      <if test="drugManu != null" >
+        #{drugManu,jdbcType=CHAR},
+      </if>
+      <if test="drugPrice != null" >
+        #{drugPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="drugType != null" >
+        #{drugType,jdbcType=CHAR},
+      </if>
+      <if test="drugGgxh != null" >
+        #{drugGgxh,jdbcType=CHAR},
+      </if>
+      <if test="drugYfyl != null" >
+        #{drugYfyl,jdbcType=CHAR},
+      </if>
+      <if test="drugPic != null" >
+        #{drugPic,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qf.domain.DrugMsgExample" resultType="java.lang.Integer" >
+    select count(*) from drug_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update drug_msg
+    <set >
+      <if test="record.pkDrugid != null" >
+        pk_drugid = #{record.pkDrugid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ukPage != null" >
+        uk_page = #{record.ukPage,jdbcType=BIGINT},
+      </if>
+      <if test="record.drugName != null" >
+        drug_name = #{record.drugName,jdbcType=CHAR},
+      </if>
+      <if test="record.drugSyz != null" >
+        drug_syz = #{record.drugSyz,jdbcType=CHAR},
+      </if>
+      <if test="record.drugManu != null" >
+        drug_manu = #{record.drugManu,jdbcType=CHAR},
+      </if>
+      <if test="record.drugPrice != null" >
+        drug_price = #{record.drugPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.drugType != null" >
+        drug_type = #{record.drugType,jdbcType=CHAR},
+      </if>
+      <if test="record.drugGgxh != null" >
+        drug_ggxh = #{record.drugGgxh,jdbcType=CHAR},
+      </if>
+      <if test="record.drugYfyl != null" >
+        drug_yfyl = #{record.drugYfyl,jdbcType=CHAR},
+      </if>
+      <if test="record.drugPic != null" >
+        drug_pic = #{record.drugPic,jdbcType=CHAR},
+      </if>
+      <if test="record.gmtCreate != null" >
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null" >
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update drug_msg
+    set pk_drugid = #{record.pkDrugid,jdbcType=BIGINT},
+      uk_page = #{record.ukPage,jdbcType=BIGINT},
+      drug_name = #{record.drugName,jdbcType=CHAR},
+      drug_syz = #{record.drugSyz,jdbcType=CHAR},
+      drug_manu = #{record.drugManu,jdbcType=CHAR},
+      drug_price = #{record.drugPrice,jdbcType=DECIMAL},
+      drug_type = #{record.drugType,jdbcType=CHAR},
+      drug_ggxh = #{record.drugGgxh,jdbcType=CHAR},
+      drug_yfyl = #{record.drugYfyl,jdbcType=CHAR},
+      drug_pic = #{record.drugPic,jdbcType=CHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.DrugMsg" >
+    update drug_msg
+    <set >
+      <if test="ukPage != null" >
+        uk_page = #{ukPage,jdbcType=BIGINT},
+      </if>
+      <if test="drugName != null" >
+        drug_name = #{drugName,jdbcType=CHAR},
+      </if>
+      <if test="drugSyz != null" >
+        drug_syz = #{drugSyz,jdbcType=CHAR},
+      </if>
+      <if test="drugManu != null" >
+        drug_manu = #{drugManu,jdbcType=CHAR},
+      </if>
+      <if test="drugPrice != null" >
+        drug_price = #{drugPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="drugType != null" >
+        drug_type = #{drugType,jdbcType=CHAR},
+      </if>
+      <if test="drugGgxh != null" >
+        drug_ggxh = #{drugGgxh,jdbcType=CHAR},
+      </if>
+      <if test="drugYfyl != null" >
+        drug_yfyl = #{drugYfyl,jdbcType=CHAR},
+      </if>
+      <if test="drugPic != null" >
+        drug_pic = #{drugPic,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.DrugMsg" >
+    update drug_msg
+    set uk_page = #{ukPage,jdbcType=BIGINT},
+      drug_name = #{drugName,jdbcType=CHAR},
+      drug_syz = #{drugSyz,jdbcType=CHAR},
+      drug_manu = #{drugManu,jdbcType=CHAR},
+      drug_price = #{drugPrice,jdbcType=DECIMAL},
+      drug_type = #{drugType,jdbcType=CHAR},
+      drug_ggxh = #{drugGgxh,jdbcType=CHAR},
+      drug_yfyl = #{drugYfyl,jdbcType=CHAR},
+      drug_pic = #{drugPic,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </update>
+  <select id="selecttBypage" resultMap="BaseResultMap">
+    SELECT * FROM drug_msg LIMIT #{page},#{pagesize}
+  </select>
+</mapper>

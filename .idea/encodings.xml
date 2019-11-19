@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospitail_registered" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_RabbitMQ_server" charset="UTF-8" />
@@ -8,6 +8,8 @@
     <file url="file://$PROJECT_DIR$/hospital_config" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_departshow" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_docteradmin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hospital_elesticsearch" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hospital_departshow" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_elesticsearch" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_eureka_server" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_indexshow" charset="UTF-8" />
@@ -17,5 +19,8 @@
     <file url="file://$PROJECT_DIR$/hospital_user_server" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_zipkin" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hospital_zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/houtai-manager" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/houtai_manager" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
