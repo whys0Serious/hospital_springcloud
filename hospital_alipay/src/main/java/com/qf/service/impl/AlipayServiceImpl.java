@@ -28,7 +28,7 @@ public class AlipayServiceImpl implements AlipayService {
     }
 
     @Override
-    public int CountByName(int id) {
+    public int CountByName(Long id) {
         return userOrderMapper.countSize(id);
     }
 

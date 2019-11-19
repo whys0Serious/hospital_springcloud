@@ -41,6 +41,8 @@ public class RabbitMailListener {
             /*
             * 设置邮件信息
             */
+//            * 设置邮件信息
+//            *
 
             mimeMailMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMailMessage, true);

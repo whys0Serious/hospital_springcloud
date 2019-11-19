@@ -24,7 +24,7 @@
   </sql>
   <select id="checkDoc" resultMap="BaseResultMap" parameterType="java.lang.Long">
     select <include refid="Base_Column_List"></include>
-    from login_msg where pk_docid=#(docid)
+    from login_msg where pk_docid=#{docid}
   </select>
   <select id="getDocMsg" resultType="java.lang.String" parameterType="java.lang.Long">
     select doc_name from doc_msg where pk_docid=#{docid}

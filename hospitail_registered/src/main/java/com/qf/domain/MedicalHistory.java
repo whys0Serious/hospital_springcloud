@@ -21,13 +21,15 @@ public class MedicalHistory {
 
     private String docAdvice;
 
+    private String diseaseInfo;
+
     private Long drugPrice;
 
     private Date gmtCreate;
 
     private Date gmtModified;
 
-    public MedicalHistory(Long pkMid, Long pkDepid, Long pkDocid, Long pkUid, String docName, String department, String diseaseName, String drugName, String docAdvice, Long drugPrice, Date gmtCreate, Date gmtModified) {
+    public MedicalHistory(Long pkMid, Long pkDepid, Long pkDocid, Long pkUid, String docName, String department, String diseaseName, String drugName, String docAdvice, String diseaseInfo, Long drugPrice, Date gmtCreate, Date gmtModified) {
         this.pkMid = pkMid;
         this.pkDepid = pkDepid;
         this.pkDocid = pkDocid;
@@ -37,6 +39,7 @@ public class MedicalHistory {
         this.diseaseName = diseaseName;
         this.drugName = drugName;
         this.docAdvice = docAdvice;
+        this.diseaseInfo = diseaseInfo;
         this.drugPrice = drugPrice;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
@@ -116,6 +119,14 @@ public class MedicalHistory {
 
     public void setDocAdvice(String docAdvice) {
         this.docAdvice = docAdvice == null ? null : docAdvice.trim();
+    }
+
+    public String getDiseaseInfo() {
+        return diseaseInfo;
+    }
+
+    public void setDiseaseInfo(String diseaseInfo) {
+        this.diseaseInfo = diseaseInfo == null ? null : diseaseInfo.trim();
     }
 
     public Long getDrugPrice() {

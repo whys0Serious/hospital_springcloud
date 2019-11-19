@@ -79,17 +79,18 @@ public class AlipayController {
             // 存入redis排号
             //先从redis查询当前科室排号人数,当前无法直接获得科室 使用订单号查询
             UserOrder userOrder1 = alipayService.findByOrderNum(userOrder.getOrderNum());
-            Integer number =(Integer)redisTemplate.opsForValue().get("num" + userOrder1.getDepName());
+            //此处存入redis键为num+科室名与医生名 具体到医生排号
+            Integer number =(Integer)redisTemplate.opsForValue().get("num" + userOrder1.getDepName()+userOrder1.getDocName());
             if(number==null){//若暂无排号则赋值为1
-                redisTemplate.opsForValue().set("num"+userOrder1.getDepName(),1);
+                redisTemplate.opsForValue().set("num"+userOrder1.getDepName()+userOrder1.getDocName(),1);
             }else{//否则进行+1计算
-                redisTemplate.opsForValue().set("num"+userOrder1.getDepName(),number+1);
+                redisTemplate.opsForValue().set("num"+userOrder1.getDepName()+userOrder1.getDocName(),number+1);
             }
             //redis根据排号存入当前科室挂号人信息(根据排号码对应挂号人)
             //再次发起redis查询获得本人排号
-            Integer userNum =(Integer) redisTemplate.opsForValue().get("num" + userOrder1.getDepName());
+            Integer userNum =(Integer) redisTemplate.opsForValue().get("num" + userOrder1.getDepName()+userOrder1.getDocName());
             //挂号人信息存入redis
-            redisTemplate.opsForValue().set("que"+userOrder1.getDepName()+userNum,userOrder1.getUserId());
+            redisTemplate.opsForValue().set("que"+userOrder1.getDepName()+userOrder1.getDocName()+userNum,userOrder1.getUserId());
             userOrder.setStatement("已支付");
             alipayService.updateState(userOrder);
             //修改订单状态
@@ -97,10 +98,20 @@ public class AlipayController {
         }
     }
 
+    //根据排号号码查询用户信息
     @RequestMapping("/showNumUser")
-    public UserMsg showNumUser(String depart,int num){
-        Long id=(Long) redisTemplate.opsForValue().get("que" + depart + num);
-        UserMsg byUserId = alipayService.findByUserId(id);
+    public UserMsg showNumUser(String depart,String docName,int num){
+        Integer id=(Integer) redisTemplate.opsForValue().get("que" + depart+docName + num);
+        long parseLong = Long.valueOf(id);
+        System.out.println(parseLong);
+        UserMsg byUserId = alipayService.findByUserId(parseLong);
         return byUserId;
+    }
+
+    //查询当前科室总排号数
+    @RequestMapping("/showNums")
+    public Integer showNums(String depart,String doc){
+        Integer integer =(Integer) redisTemplate.opsForValue().get("num" + depart + doc);
+        return integer;
     }
 }

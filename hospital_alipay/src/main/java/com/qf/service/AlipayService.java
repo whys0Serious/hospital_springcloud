@@ -11,7 +11,7 @@ public interface AlipayService{
 
     List<UserOrder> showOrder(PageBean pageBean);
 
-    int CountByName(int id);
+    int CountByName(Long id);
 
     int updateState(UserOrder userOrder);
 
