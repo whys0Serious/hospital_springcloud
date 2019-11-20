@@ -1,6 +1,7 @@
 package com.qf.service;
 
 import com.qf.domain.DocMsg;
+import com.qf.domain.UserMsg;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,4 +19,10 @@ public interface DocMsgService {
     String updatedocmsg(DocMsg docMsg);
 
     List<String> findnames();
+
+    List<UserMsg> yishengzhuce();
+
+    String xiugaizige(Long id, Byte cs);
+
+    String tianjiaguanliyaun(UserMsg userMsg);
 }

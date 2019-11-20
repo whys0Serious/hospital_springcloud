@@ -304,4 +304,28 @@
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where pk_docid = #{pkDocid,jdbcType=BIGINT}
   </update>
+  <resultMap id="BaseResultMap2" type="com.qf.domain.UserMsg" >
+    <constructor >
+      <idArg column="pk_uid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="pk_docid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_pass" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_mail" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_pic" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_gender" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="user_age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_phone" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="is_activated" jdbcType="TINYINT" javaType="java.lang.Byte" />
+      <arg column="identity" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <select id="yishengzhuce" resultMap="BaseResultMap2">
+    select * from login_msg where identity='医生'
+  </select>
+  <update id="xiugaizige">
+    update login_msg set is_activated=#{integer}
+    where pk_docid = #{id,jdbcType=BIGINT}
+  </update>
 </mapper>
