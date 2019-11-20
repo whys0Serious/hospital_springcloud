@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.mapper.PicMapper">
+    <select id="findpic" resultType="com.qf.domain.Pic">
+        select * from lbt_img;
+    </select>
+    <update id="update" keyProperty="id" parameterType="com.qf.domain.Pic" useGeneratedKeys="true">
+        update lbt_img set  path=#{path} where id=#{id}
+    </update>
+</mapper>

@@ -2,8 +2,10 @@ package com.qf.service.impl;
 
 import com.qf.domain.DocMsg;
 import com.qf.domain.DocMsgExample;
+import com.qf.domain.UserMsg;
 import com.qf.mapper.DocMsgMapper;
 import com.qf.service.DocMsgService;
+import com.qf.util.Md5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +42,21 @@ public class DocMsgServiceImpl implements DocMsgService {
     @Override
     public List<String> findnames() {
         return docMsgMapper.findnames();
+    }
+
+    @Override
+    public String xiugaizige(Long integer, Byte id) {
+        return docMsgMapper.xiugaizige(integer,id)>0?"操作成功":"操作失败";
+    }
+
+    @Override
+    public String tianjiaguanliyaun(UserMsg userMsg) {
+        userMsg.setUserPass(Md5Utils.encryptPassword(userMsg.getUserPass(),"1000phone"));
+        return docMsgMapper.tianjiaguanliyaun(userMsg)>0?"添加成功":"添加失败";
+    }
+    @Override
+    public List<UserMsg> yishengzhuce() {
+        return docMsgMapper.yishengzhuce();
     }
 
     @Override

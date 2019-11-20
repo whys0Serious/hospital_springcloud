@@ -1,10 +1,12 @@
 package com.qf.controller;
 
 import com.qf.domain.DocMsg;
+import com.qf.domain.UserMsg;
 import com.qf.service.DocMsgService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.Doc;
 import java.util.List;
 
 @RestController
@@ -35,4 +37,17 @@ public class DocMsgController {
     public List<String> findnamesdocmsg(){
         return docMsgService.findnames();
     }
+    @GetMapping("/yishengzhuce")
+    public List<UserMsg> yishengzhuce(){
+        return docMsgService.yishengzhuce();
+    }
+    @GetMapping("/xiugaizige/{id}/{cs}")
+    public String xiugaizige(@PathVariable("id") Long id,@PathVariable("cs") Byte cs){
+        return docMsgService.xiugaizige(id,cs);
+    }
+    @PostMapping("/tianjiaguanliyaun")
+    public String tianjiaguanliyaun(@RequestBody UserMsg userMsg){
+        return docMsgService.tianjiaguanliyaun(userMsg);
+    }
+
 }

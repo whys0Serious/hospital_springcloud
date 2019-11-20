@@ -1,6 +1,7 @@
 package com.qf.controller;
 
 import com.qf.domain.DrugMsg;
+import com.qf.domain.GithubLoginUser;
 import com.qf.service.PioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,4 +17,5 @@ public class PioController {
     public String string(@RequestBody DrugMsg drugMsg){
         return pioService.export(drugMsg);
     }
+   
 }
