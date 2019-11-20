@@ -5,12 +5,10 @@ import com.qf.model.Docter;
 import com.qf.model.Respons;
 import com.qf.service.Docservice;
 import com.qf.service.DocterService;
+import com.qf.service.ShouCangService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,8 @@ public class Doccontroller {
     private Docservice docservice;
     @Autowired
     private DocterService docterService;
+    @Autowired
+    private ShouCangService shouCangService;
     
     @Autowired
     private RedisTemplate redisTemplate;
@@ -68,6 +68,35 @@ public class Doccontroller {
         return respons;
 
     }
+
+    //收藏
+    @RequestMapping(value = "/insert/{userid}/{docid}",method = RequestMethod.GET)
+    @ResponseBody
+    public String insert(@PathVariable("userid") Integer userid,@PathVariable("docid") Integer docid){
+
+        return shouCangService.insert(userid,docid);
+
+    }
+
+    //取消收藏
+    @RequestMapping(value = "/delete/{userid}/{docid}",method = RequestMethod.GET)
+    @ResponseBody
+    public String delete(@PathVariable("userid") Integer userid,@PathVariable("docid") Integer docid){
+
+        return shouCangService.delete(userid,docid);
+
+    }
+
+
+    //取消收藏
+    @RequestMapping(value = "/searchlove",method = RequestMethod.GET)
+    @ResponseBody
+    public List<Docter> searchlove(Integer userid){
+
+        return shouCangService.searchlove(userid);
+
+    }
+
 
 
 }

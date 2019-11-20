@@ -24,9 +24,6 @@
         <module name="hospital_zipkin" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="hospital_springcloud" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

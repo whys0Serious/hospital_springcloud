@@ -199,11 +199,7 @@ public class EsDataController {
     public Docter findDocterInfo(@RequestBody Docter docter){
         return docterService.findDocterInfo(docter.getDid());
     }
-
-
-
-
-
+    
 
     @RequestMapping(value = "/findDocterNotDepatment/{pk_docid}",method = RequestMethod.GET)
     @ResponseBody

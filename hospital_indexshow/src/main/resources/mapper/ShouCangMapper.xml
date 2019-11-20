@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.ShouCangMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.model.ShouCang" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="userid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="docid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+
+  <resultMap id="BaseltMap" type="com.qf.model.Doc" >
+    <constructor >
+      <idArg column="pk_docid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="pk_uid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="pk_depid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="doc_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="department" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="specialty" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gender" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="working_age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="attendance" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="zhicheng" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="doc_pic" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, userid, docid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from shoucang
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from shoucang
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.model.ShouCang" >
+    insert into shoucang (id, userid, docid
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{docid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="inserta" >
+    insert into shoucang(id, userid, docid
+      )
+    values (id=null, #{userid}, #{docid}
+      )
+  </insert>
+  <delete id="deletea" >
+    DELETE
+    FROM
+    shoucang
+    WHERE
+    userid=#{userid} AND docid=#{docid}
+  </delete>
+  <insert id="insertSelective" parameterType="com.qf.model.ShouCang" >
+    insert into shoucang
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="docid != null" >
+        docid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="docid != null" >
+        #{docid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.model.ShouCang" >
+    update shoucang
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="docid != null" >
+        docid = #{docid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.model.ShouCang" >
+    update shoucang
+    set userid = #{userid,jdbcType=INTEGER},
+      docid = #{docid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="searchlove" resultMap="BaseltMap">
+    select * from
+    doc_msg d, shoucang s
+    where s.userid=#{userid}
+    and d.pk_docid=s.docid
+
+  </select>
+</mapper>
