@@ -8,12 +8,14 @@ import com.qf.domain.ResultBean;
 import com.qf.domain.UserMsg;
 import com.qf.domain.UserOrder;
 import com.qf.service.AlipayService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class AlipayController {
@@ -113,5 +115,34 @@ public class AlipayController {
     public Integer showNums(String depart,String doc){
         Integer integer =(Integer) redisTemplate.opsForValue().get("num" + depart + doc);
         return integer;
+    }
+    //查询当前科室在等排号数
+    @RequestMapping("/showNowNums")
+    public Integer showNowNums(String depart,String doc){
+        Integer integer=(Integer) redisTemplate.opsForValue().get("nowNum"+depart+doc);
+        return integer;
+    }
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    //呼叫下一位排号病人
+    @RequestMapping("/callNext")
+    public void  callNext(String depart,String doc,Integer num){
+        //先从redis中取出当前被叫信息
+        Integer uid = (Integer)redisTemplate.opsForValue().get("que" + depart + doc + (num+1));
+        Long id = Long.valueOf(uid);
+        //将需要传递的信息封装到对象中发送给队列
+        UserOrder userOrder=new UserOrder();
+        userOrder.setUserId(id);
+        userOrder.setDepName(depart);
+        userOrder.setDocName(doc);
+        //将信息传给rabbit
+        rabbitTemplate.convertAndSend("sendMessage",userOrder);
+        //同时删除上一条redis中的用户
+        redisTemplate.expire("que"+depart+doc+num,0,TimeUnit.SECONDS);
+        //修改剩余预约人数
+        Integer u =(Integer) redisTemplate.opsForValue().get("num" + depart + doc);
+        redisTemplate.opsForValue().set("nowNum"+depart+doc,u-1);
     }
 }

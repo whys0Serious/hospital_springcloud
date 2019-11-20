@@ -2,6 +2,7 @@
 package com.qf.config;
 
 import com.qf.domain.UserMsg;
+import com.qf.domain.UserOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -55,6 +56,11 @@ public class RabbitMailListener {
         } catch (Exception e) {
             logger.error("邮件发送失败", e.getMessage());
         }
+    }
+
+    @RabbitListener(queues = "sendMessage")
+    public void sendMessage(UserOrder userOrder){
+        System.out.println("收到："+userOrder.toString());
     }
 }
 

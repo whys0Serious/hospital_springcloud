@@ -1,48 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="CompilerConfiguration">
-    <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="hospital_RabbitMQ_server" />
-        <module name="houtai-manager" />
-        <module name="hospital_indexshow" />
-        <module name="hospital_elesticsearch" />
-        <module name="hospital_departshow" />
-        <module name="hospital_config" />
-        <module name="hospital_kill" />
-        <module name="hospital_eureka_server" />
-        <module name="hospital_springboot_admin" />
-        <module name="hospital_user_server" />
-        <module name="hospitail_registered" />
-        <module name="hospital_model" />
-        <module name="hospital_docteradmin" />
-        <module name="hospital_zuul" />
-        <module name="hospital_alipay" />
-        <module name="hospital_zipkin" />
-      </profile>
-    </annotationProcessing>
-  </component>
-  <component name="JavacSettings">
-    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="hospitail_registered" options="-parameters" />
-      <module name="hospital_RabbitMQ_server" options="-parameters" />
-      <module name="hospital_alipay" options="-parameters" />
-      <module name="hospital_config" options="-parameters" />
-      <module name="hospital_departshow" options="-parameters" />
-      <module name="hospital_docteradmin" options="-parameters" />
-      <module name="hospital_elesticsearch" options="-parameters" />
-      <module name="hospital_eureka_server" options="-parameters" />
-      <module name="hospital_indexshow" options="-parameters" />
-      <module name="hospital_kill" options="-parameters" />
-      <module name="hospital_model" options="-parameters" />
-      <module name="hospital_springboot_admin" options="-parameters" />
-      <module name="hospital_user_server" options="-parameters" />
-      <module name="hospital_zipkin" options="-parameters" />
-      <module name="hospital_zuul" options="-parameters" />
-      <module name="houtai-manager" options="-parameters" />
-    </option>
-  </component>
+    <component name="CompilerConfiguration">
+        <annotationProcessing>
+            <profile name="Maven default annotation processors profile" enabled="true">
+                <sourceOutputDir name="target/generated-sources/annotations" />
+                <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+                <outputRelativeToContentRoot value="true" />
+                <module name="hospitail_registered" />
+                <module name="hospital_alipay" />
+                <module name="hospital_config" />
+                <module name="hospital_departshow" />
+                <module name="hospital_docteradmin" />
+                <module name="hospital_elesticsearch" />
+                <module name="hospital_eureka_server" />
+                <module name="hospital_indexshow" />
+                <module name="hospital_kill" />
+                <module name="hospital_model" />
+                <module name="hospital_RabbitMQ_server" />
+                <module name="hospital_springboot_admin" />
+                <module name="hospital_user_server" />
+                <module name="hospital_zipkin" />
+                <module name="hospital_zuul" />
+                <module name="houtai-manager" />
+                <module name="houtai_manager" />
+            </profile>
+        </annotationProcessing>
+    </component>
 </project>

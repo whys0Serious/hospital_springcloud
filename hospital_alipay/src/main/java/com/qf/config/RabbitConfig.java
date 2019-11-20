@@ -8,12 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
     @Bean
-    public Queue mailQueue(){
-        return new Queue("sendMail");
-    }
-
-    @Bean
-    public Queue messageQueue(){
+    public Queue mailQueue(){//初始化一个队列，传递发送邮件消息
         return new Queue("sendMessage");
     }
 }
