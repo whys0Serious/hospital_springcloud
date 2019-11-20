@@ -1,6 +1,7 @@
 package com.qf.service;
 
 import com.qf.domain.DocSchedule;
+import com.qf.domain.GithubLoginUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +15,5 @@ public interface DocSheduleService {
     String deleteById(Long id);
 
     DocSchedule findalldocsebyid(Long id);
+
 }

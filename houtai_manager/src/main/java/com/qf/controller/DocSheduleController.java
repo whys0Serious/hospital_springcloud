@@ -2,6 +2,7 @@ package com.qf.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.qf.domain.DocSchedule;
+import com.qf.domain.GithubLoginUser;
 import com.qf.mapper.DocScheduleMapper;
 import com.qf.service.DepartService;
 import com.qf.service.DocSheduleService;
@@ -37,5 +38,9 @@ public class DocSheduleController {
     @GetMapping("/findalldocsebyid/{id}")
     public DocSchedule findalldocsebyid(@PathVariable("id") Long id){
         return sheduleService.findalldocsebyid(id);
+    }
+    //github登陆
+    public String LogingitHub(GithubLoginUser githubLoginUser){
+        return "";
     }
 }
