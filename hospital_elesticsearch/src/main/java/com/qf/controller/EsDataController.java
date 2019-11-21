@@ -5,6 +5,8 @@ import com.qf.domain.Docter;
 import com.qf.domain.Respons;
 import com.qf.service.DocterService;
 import net.sf.json.JSONObject;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -41,6 +43,8 @@ public class EsDataController {
     @ResponseBody
     @RequestMapping("/searchall")
     public Respons search(Integer page, Integer size,String department,String zhiwei) throws IOException {
+        try (CloseableHttpAsyncClient httpclient = HttpAsyncClients.createDefault()) {
+            httpclient.start();}
         //声明需要查询的索引库
         SearchRequest searchRequest = new SearchRequest("docter_info");
         searchRequest.types("doc");

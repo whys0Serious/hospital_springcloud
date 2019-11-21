@@ -1,7 +1,10 @@
 package com.qf.controller;
 
+import com.qf.domain.DrugForDepart;
 import com.qf.domain.DrugMsg;
 import com.qf.domain.PageBean;
+import com.qf.mapper.DepartmenMsgMapper;
+import com.qf.service.DepartService;
 import com.qf.service.DrugService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +39,13 @@ public class DrugMsgController {
     public PageBean selectAllDru1(@PathVariable("page") Integer page, @PathVariable("pagesize")Integer pagesize){
         return drugService.selectAllDrug(page,pagesize);
     }
+
+    /* 不分页查询所有*/
+    @GetMapping("/findAllDrug")
+    public List<String> findAllDrug(){
+        return drugService.selectAllDrug();
+    }
+
     /*根据id删除一条记录*/
     @GetMapping("/deleteById/{id}")
     public String deleteById(@PathVariable("id") Integer id){
@@ -71,5 +81,19 @@ public class DrugMsgController {
         list.add(ff);
         list.add(fch);
         return list;
+    }
+
+    @Autowired
+    private DepartService departService;
+    @GetMapping("/drugGiven")
+    public void drugGiven(String drug,String[] depart){
+        //获取药品id
+        Long drugId = drugService.findDrugId(drug);
+        for (int i = 0; i < depart.length; i++) {
+            //查询科室id;
+            Long id = departService.findDepId(depart[i]);
+            //获得id后新增入库；
+            drugService.insertDrugDepartManner(id,drugId);
+        }
     }
 }

@@ -18,4 +18,6 @@ public interface DepartService {
     String updatedepart(DepartmenMsg departmenMsg);
 
     List<String> findnames();
+
+    Long findDepId(String name);
 }

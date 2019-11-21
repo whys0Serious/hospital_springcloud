@@ -18,4 +18,10 @@ public interface DrugService {
     String updatedrug(DrugMsg drugMsg);
 
     List<DrugMsg> selectAllDru11();
+
+    List<String> selectAllDrug();
+
+    Long findDrugId(String name);
+
+    int insertDrugDepartManner(Long depid,Long drugid);
 }

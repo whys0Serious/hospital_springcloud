@@ -127,7 +127,15 @@ private UserMsgMapper userMsgMapper;
             return docName;
         }
         return null;
+    }
 
+    @RequestMapping("checkOnline")
+    public String checkOnline(Long docid){
+        UserMsg userMsg = userLoginService.checkDoc(docid);
+        if(userMsg!=null){
+            return "已注册医师";
+        }
+        return null;
     }
 
 
@@ -167,7 +175,7 @@ private UserMsgMapper userMsgMapper;
             else if(userMsg2!=null){//手机号码登录情况
                 if(userMsg2.getIdentity().equals(userMsg.getIdentity())&&userMsg2.getIsActivated()==i){
                     //使用手机号登录
-                    String password = Md5Utils.encryptPassword(userMsg.getUserPass(), userMsg2.getUserName());
+                    String password = Md5Utils.encryptPassword(userMsg.getUserPass(), "健美");
                     UsernamePasswordToken token = new UsernamePasswordToken(userMsg2.getUserPhone(), password);
                     subject.login(token);
                     redisTemplate.opsForValue().set("userMsg"+userMsg2.getPkUid(),userMsg2);

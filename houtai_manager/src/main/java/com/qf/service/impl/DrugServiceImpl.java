@@ -27,6 +27,21 @@ public class DrugServiceImpl implements DrugService {
     }
 
     @Override
+    public List<String> selectAllDrug() {
+        return drugMsgMapper.selectAllDrug();
+    }
+
+    @Override
+    public Long findDrugId(String name) {
+        return drugMsgMapper.findDrugId(name);
+    }
+
+    @Override
+    public int insertDrugDepartManner(Long depid, Long drugid) {
+        return drugMsgMapper.insertDrugDepartManner(depid,drugid);
+    }
+
+    @Override
     public DrugMsg selectBydId(Long id) {
         return drugMsgMapper.selectByPrimaryKey(id);
     }

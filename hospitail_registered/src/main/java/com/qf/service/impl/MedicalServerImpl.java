@@ -22,4 +22,9 @@ public class MedicalServerImpl implements MedicalServer {
     public MedicalHistory findByPkId(Long pimid) {
         return medicalHistoryMapper.selectByPrimaryKey(pimid);
     }
+
+    @Override
+    public void insertHistory(MedicalHistory medicalHistory) {
+        medicalHistoryMapper.insertSelective(medicalHistory);
+    }
 }

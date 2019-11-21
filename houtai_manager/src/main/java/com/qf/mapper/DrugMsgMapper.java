@@ -19,6 +19,8 @@ public interface DrugMsgMapper {
     int insert(DrugMsg record);
 
     int insertSelective(DrugMsg record);
+    //查询所有
+    List<String> selectAllDrug();
 
     List<DrugMsg> selectByExample(DrugMsgExample example);
 
@@ -34,4 +36,8 @@ public interface DrugMsgMapper {
     List<DrugMsg> selecttBypage(@Param("page") Integer page, @Param("pagesize") Integer pagesize);
     @Select(value = "SELECT COUNT(*) FROM  drug_msg")
     Integer selectCount();
+
+    Long findDrugId(String name);
+
+    int insertDrugDepartManner(@Param("depid")Long depid,@Param("drugid")Long drugid);
 }

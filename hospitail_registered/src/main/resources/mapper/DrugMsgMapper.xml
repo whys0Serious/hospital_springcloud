@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qf.dao.DrugMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.qf.domain.DrugMsg" >
+    <constructor >
+      <idArg column="pk_drugid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="uk_page" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="drug_name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="drug_syz" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="drug_manu" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="drug_price" jdbcType="DECIMAL" javaType="java.lang.Long" />
+      <arg column="drug_type" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="drug_ggxh" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="drug_yfyl" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="drug_pic" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="gmt_create" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="gmt_modified" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pk_drugid, uk_page, drug_name, drug_syz, drug_manu, drug_price, drug_type, drug_ggxh, 
+    drug_yfyl, drug_pic, gmt_create, gmt_modified
+  </sql>
+  <select id="findDepId" parameterType="java.lang.String" resultType="java.lang.Long">
+    select pk_depid from department_msg where dep_name=#{name}
+  </select>
+  <select id="findPrice" parameterType="java.lang.String" resultType="java.lang.Long">
+    select drug_price from drug_msg where drug_name=#{name}
+  </select>
+  <select id="selectMsgBydep" parameterType="java.lang.Long" resultType="java.lang.String">
+    SELECT drug.drug_name FROM drug_msg drug,depart_drug dd
+    where  drug.pk_drugid=dd.pk_drugid and dd.pk_depid=#{depid}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from drug_msg
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from drug_msg
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.qf.domain.DrugMsg" >
+    insert into drug_msg (pk_drugid, uk_page, drug_name, 
+      drug_syz, drug_manu, drug_price, 
+      drug_type, drug_ggxh, drug_yfyl, 
+      drug_pic, gmt_create, gmt_modified
+      )
+    values (#{pkDrugid,jdbcType=BIGINT}, #{ukPage,jdbcType=BIGINT}, #{drugName,jdbcType=CHAR}, 
+      #{drugSyz,jdbcType=CHAR}, #{drugManu,jdbcType=CHAR}, #{drugPrice,jdbcType=DECIMAL}, 
+      #{drugType,jdbcType=CHAR}, #{drugGgxh,jdbcType=CHAR}, #{drugYfyl,jdbcType=CHAR}, 
+      #{drugPic,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.domain.DrugMsg" >
+    insert into drug_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkDrugid != null" >
+        pk_drugid,
+      </if>
+      <if test="ukPage != null" >
+        uk_page,
+      </if>
+      <if test="drugName != null" >
+        drug_name,
+      </if>
+      <if test="drugSyz != null" >
+        drug_syz,
+      </if>
+      <if test="drugManu != null" >
+        drug_manu,
+      </if>
+      <if test="drugPrice != null" >
+        drug_price,
+      </if>
+      <if test="drugType != null" >
+        drug_type,
+      </if>
+      <if test="drugGgxh != null" >
+        drug_ggxh,
+      </if>
+      <if test="drugYfyl != null" >
+        drug_yfyl,
+      </if>
+      <if test="drugPic != null" >
+        drug_pic,
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create,
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkDrugid != null" >
+        #{pkDrugid,jdbcType=BIGINT},
+      </if>
+      <if test="ukPage != null" >
+        #{ukPage,jdbcType=BIGINT},
+      </if>
+      <if test="drugName != null" >
+        #{drugName,jdbcType=CHAR},
+      </if>
+      <if test="drugSyz != null" >
+        #{drugSyz,jdbcType=CHAR},
+      </if>
+      <if test="drugManu != null" >
+        #{drugManu,jdbcType=CHAR},
+      </if>
+      <if test="drugPrice != null" >
+        #{drugPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="drugType != null" >
+        #{drugType,jdbcType=CHAR},
+      </if>
+      <if test="drugGgxh != null" >
+        #{drugGgxh,jdbcType=CHAR},
+      </if>
+      <if test="drugYfyl != null" >
+        #{drugYfyl,jdbcType=CHAR},
+      </if>
+      <if test="drugPic != null" >
+        #{drugPic,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.domain.DrugMsg" >
+    update drug_msg
+    <set >
+      <if test="ukPage != null" >
+        uk_page = #{ukPage,jdbcType=BIGINT},
+      </if>
+      <if test="drugName != null" >
+        drug_name = #{drugName,jdbcType=CHAR},
+      </if>
+      <if test="drugSyz != null" >
+        drug_syz = #{drugSyz,jdbcType=CHAR},
+      </if>
+      <if test="drugManu != null" >
+        drug_manu = #{drugManu,jdbcType=CHAR},
+      </if>
+      <if test="drugPrice != null" >
+        drug_price = #{drugPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="drugType != null" >
+        drug_type = #{drugType,jdbcType=CHAR},
+      </if>
+      <if test="drugGgxh != null" >
+        drug_ggxh = #{drugGgxh,jdbcType=CHAR},
+      </if>
+      <if test="drugYfyl != null" >
+        drug_yfyl = #{drugYfyl,jdbcType=CHAR},
+      </if>
+      <if test="drugPic != null" >
+        drug_pic = #{drugPic,jdbcType=CHAR},
+      </if>
+      <if test="gmtCreate != null" >
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null" >
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.domain.DrugMsg" >
+    update drug_msg
+    set uk_page = #{ukPage,jdbcType=BIGINT},
+      drug_name = #{drugName,jdbcType=CHAR},
+      drug_syz = #{drugSyz,jdbcType=CHAR},
+      drug_manu = #{drugManu,jdbcType=CHAR},
+      drug_price = #{drugPrice,jdbcType=DECIMAL},
+      drug_type = #{drugType,jdbcType=CHAR},
+      drug_ggxh = #{drugGgxh,jdbcType=CHAR},
+      drug_yfyl = #{drugYfyl,jdbcType=CHAR},
+      drug_pic = #{drugPic,jdbcType=CHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
+    where pk_drugid = #{pkDrugid,jdbcType=BIGINT}
+  </update>
+</mapper>

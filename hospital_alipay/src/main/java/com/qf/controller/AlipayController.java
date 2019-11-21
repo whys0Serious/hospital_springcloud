@@ -12,6 +12,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.util.Date;
 import java.util.List;
@@ -83,10 +84,16 @@ public class AlipayController {
             UserOrder userOrder1 = alipayService.findByOrderNum(userOrder.getOrderNum());
             //此处存入redis键为num+科室名与医生名 具体到医生排号
             Integer number =(Integer)redisTemplate.opsForValue().get("num" + userOrder1.getDepName()+userOrder1.getDocName());
+            //获取在排人数
+            Integer nowNumber =(Integer)redisTemplate.opsForValue().get("nowNum" + userOrder1.getDepName()+userOrder1.getDocName());
             if(number==null){//若暂无排号则赋值为1
                 redisTemplate.opsForValue().set("num"+userOrder1.getDepName()+userOrder1.getDocName(),1);
+                //在排人数同时赋值
+                redisTemplate.opsForValue().set("nowNum"+userOrder1.getDepName()+userOrder1.getDocName(),1);
             }else{//否则进行+1计算
                 redisTemplate.opsForValue().set("num"+userOrder1.getDepName()+userOrder1.getDocName(),number+1);
+                //在排也+1
+                redisTemplate.opsForValue().set("nowNum"+userOrder1.getDepName()+userOrder1.getDocName(),nowNumber+1);
             }
             //redis根据排号存入当前科室挂号人信息(根据排号码对应挂号人)
             //再次发起redis查询获得本人排号
@@ -104,9 +111,16 @@ public class AlipayController {
     @RequestMapping("/showNumUser")
     public UserMsg showNumUser(String depart,String docName,int num){
         Integer id=(Integer) redisTemplate.opsForValue().get("que" + depart+docName + num);
+        while (id==null){
+            num++;
+            id=(Integer) redisTemplate.opsForValue().get("que" + depart+docName + num);
+        }
+
         long parseLong = Long.valueOf(id);
         System.out.println(parseLong);
         UserMsg byUserId = alipayService.findByUserId(parseLong);
+        Long value = Long.valueOf(num);
+        byUserId.setPkDocid(value);//排号赋值给一个表中没有用到的可变字段
         return byUserId;
     }
 
@@ -129,8 +143,14 @@ public class AlipayController {
     //呼叫下一位排号病人
     @RequestMapping("/callNext")
     public void  callNext(String depart,String doc,Integer num){
+        //删除上一条redis中的用户
+        redisTemplate.expire("que"+depart+doc+num,0,TimeUnit.SECONDS);
         //先从redis中取出当前被叫信息
         Integer uid = (Integer)redisTemplate.opsForValue().get("que" + depart + doc + (num+1));
+        while (uid==null){
+            num++;
+            uid=(Integer)redisTemplate.opsForValue().get("que" + depart + doc + num);
+        }
         Long id = Long.valueOf(uid);
         //将需要传递的信息封装到对象中发送给队列
         UserOrder userOrder=new UserOrder();
@@ -139,10 +159,8 @@ public class AlipayController {
         userOrder.setDocName(doc);
         //将信息传给rabbit
         rabbitTemplate.convertAndSend("sendMessage",userOrder);
-        //同时删除上一条redis中的用户
-        redisTemplate.expire("que"+depart+doc+num,0,TimeUnit.SECONDS);
         //修改剩余预约人数
-        Integer u =(Integer) redisTemplate.opsForValue().get("num" + depart + doc);
+        Integer u =(Integer) redisTemplate.opsForValue().get("nowNum" + depart + doc);
         redisTemplate.opsForValue().set("nowNum"+depart+doc,u-1);
     }
 }

@@ -37,6 +37,11 @@ public class DepartServiceImpl implements DepartService {
     }
 
     @Override
+    public Long findDepId(String name) {
+        return departmenMsgMapper.findBydepName(name);
+    }
+
+    @Override
     public String updatedepart(DepartmenMsg departmenMsg) {
         departmenMsg.setGmtModified(new Date());
         return departmenMsgMapper.updateByPrimaryKeySelective(departmenMsg)>0?"修改成功":"修改失败";

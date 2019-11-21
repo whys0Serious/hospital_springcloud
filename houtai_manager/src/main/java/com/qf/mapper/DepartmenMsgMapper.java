@@ -33,4 +33,7 @@ public interface DepartmenMsgMapper {
     int updateByPrimaryKey(DepartmenMsg record);
     @Select(value = "select dep_name from department_msg")
     List<String> findnames();
+
+    //根据名称查询科室id
+    Long findBydepName(String name);
 }

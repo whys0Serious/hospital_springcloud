@@ -9,4 +9,6 @@ public interface MedicalServer {
         List<MedicalHistory> findById(Long id);
 
         MedicalHistory findByPkId(Long pimid);
+
+        void  insertHistory(MedicalHistory medicalHistory);
 }

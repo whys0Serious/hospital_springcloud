@@ -88,6 +88,9 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="findBydepName" resultType="java.lang.Long">
+    select pk_depid from department_msg where dep_name=#{name}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />

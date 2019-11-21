@@ -51,7 +51,8 @@ public class DocMsgServiceImpl implements DocMsgService {
 
     @Override
     public String tianjiaguanliyaun(UserMsg userMsg) {
-        userMsg.setUserPass(Md5Utils.encryptPassword(userMsg.getUserPass(),"1000phone"));
+        userMsg.setUserPic("http://122.51.42.29:8888/group1/M00/00/00/rBEAEF3JUMyAGmLQAAC_DmX_yHo35..jpg");
+        userMsg.setUserPass(Md5Utils.encryptPassword(userMsg.getUserPass(),"健美"));
         return docMsgMapper.tianjiaguanliyaun(userMsg)>0?"添加成功":"添加失败";
     }
     @Override

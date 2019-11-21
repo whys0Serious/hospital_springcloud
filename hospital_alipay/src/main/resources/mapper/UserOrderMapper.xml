@@ -78,7 +78,9 @@
   </select>
   <select id="selectByName" resultMap="BaseResultMap" parameterType="com.qf.domain.PageBean">
     select <include refid="Base_Column_List" />
-    from user_order where user_id=#{id} limit #{pageSize},#{size}
+    from user_order where user_id=#{id}
+    ORDER BY gmt_create DESC
+    limit #{pageSize},#{size}
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
