@@ -49,5 +49,8 @@ public class DocMsgController {
     public String tianjiaguanliyaun(@RequestBody UserMsg userMsg){
         return docMsgService.tianjiaguanliyaun(userMsg);
     }
-
+    @GetMapping("/chaxunyisheng")
+    public List<String> chaxunyisheng(){
+      return   docMsgService.chaxunyisheng();
+    }
 }

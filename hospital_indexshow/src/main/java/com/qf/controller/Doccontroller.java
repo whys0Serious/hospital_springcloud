@@ -96,6 +96,14 @@ public class Doccontroller {
         return shouCangService.searchlove(userid);
 
     }
+    @GetMapping("/remove")
+    public String remove(@RequestParam("username") Integer username){
+        return shouCangService.remove(username);
+    }
+    @GetMapping("/changxunshoucang")
+    public Boolean changxunshoucang(@RequestParam("did") Integer username,@RequestParam("doctorid") Integer doctorid ){
+        return shouCangService.changxunshoucang(username,doctorid);
+    }
 
 
 

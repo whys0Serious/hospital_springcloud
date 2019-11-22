@@ -49,4 +49,6 @@ public interface DocMsgMapper {
             "      #{isActivated,jdbcType=TINYINT}, #{identity,jdbcType=CHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, \n" +
             "      #{gmtModified,jdbcType=TIMESTAMP})")
     int tianjiaguanliyaun(UserMsg userMsg);
+    @Select("select user_name from login_msg where identity='医生'")
+    List<String> chaxunyisheng();
 }

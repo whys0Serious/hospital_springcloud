@@ -25,4 +25,6 @@ public interface DocMsgService {
     String xiugaizige(Long id, Byte cs);
 
     String tianjiaguanliyaun(UserMsg userMsg);
+
+    List<String> chaxunyisheng();
 }

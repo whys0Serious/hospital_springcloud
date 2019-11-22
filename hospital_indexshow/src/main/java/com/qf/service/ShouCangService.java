@@ -21,4 +21,8 @@ public interface ShouCangService {
     String delete(Integer userid, Integer docid);
 
     List<Docter> searchlove(Integer userid);
+
+    String remove(Integer username);
+
+    Boolean changxunshoucang(Integer username, Integer doctorid);
 }

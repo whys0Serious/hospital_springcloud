@@ -55,6 +55,12 @@ public class DocMsgServiceImpl implements DocMsgService {
         userMsg.setUserPass(Md5Utils.encryptPassword(userMsg.getUserPass(),"健美"));
         return docMsgMapper.tianjiaguanliyaun(userMsg)>0?"添加成功":"添加失败";
     }
+
+    @Override
+    public List<String> chaxunyisheng() {
+        return docMsgMapper.chaxunyisheng();
+    }
+
     @Override
     public List<UserMsg> yishengzhuce() {
         return docMsgMapper.yishengzhuce();

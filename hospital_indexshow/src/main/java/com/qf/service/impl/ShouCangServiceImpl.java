@@ -37,6 +37,16 @@ public class ShouCangServiceImpl implements ShouCangService {
     }
 
 
+    @Override
+    public Boolean changxunshoucang(Integer username, Integer doctorid) {
+        return shouCangMapper.changxunshoucang(username,doctorid)>0?true:false;
+    }
+
+    @Override
+    public String remove(Integer username) {
+        return shouCangMapper.remove(username)>0?"删除成功":"删除失败";
+    }
+
     //查询该用户的收藏
     @Override
     public List<Docter> searchlove(Integer userid) {
